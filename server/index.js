@@ -29,9 +29,11 @@ index.use(
 
 index.use(
 	cors({
-		origin:"http://localhost:3000",
-		credentials:true,
-	})
+		origin: '*',
+		methods: '*',
+		allowedHeaders: ['Content-Type', 'Authorization'],
+		credentials: true,
+	  })
 )
 
 const PORT = process.env.PORT || 6506;
