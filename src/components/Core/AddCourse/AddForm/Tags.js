@@ -19,8 +19,7 @@ export default function ChipInput({
   useEffect(() => {
     if (editCourse) {
       setChips(course?.tag);
-      console.log("chips:");
-      console.log(course.tag);
+
     }
     register(name, { required: true, validate: (value) => value.length > 0 })
 

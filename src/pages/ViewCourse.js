@@ -7,6 +7,7 @@ import {  fetchFullCourseDetails } from '../services/AuthApi/CourseApi';
 import { setCompletedLectures, setCourseEntireData, setCourseSectionData, setTotalNoOfLectures } from '../slices/viewCourseSlice';
 import VideoDetailSideBar from '../components/Core/ViewCourse/VideoDetailSideBar';
 import CourseReviewModal from '../components/Core/ViewCourse/CourseReviewModal';
+import { useMutation } from '@tanstack/react-query';
 
 const ViewCourse = () => {
     const {courseID}=useParams();
@@ -14,9 +15,40 @@ const ViewCourse = () => {
     const dispatch=useDispatch();
     const[reviewModal,setReviewModal]=useState(false);
 
-    async function viewCourseDetails(){
-        const courseData=await fetchFullCourseDetails(courseID,token);
-        console.log("course data:",courseData);
+    const mutation=useMutation({
+        mutationFn:()=>{
+            return fetchFullCourseDetails(courseID,token);
+        }
+    })
+
+    // async function viewCourseDetails(){
+    //     const courseData=await fetchFullCourseDetails(courseID,token);
+    //     console.log("course data:",courseData);
+    //     dispatch(setCourseSectionData(courseData?.courseDetails?.courseContent));
+    //     dispatch(setCourseEntireData(courseData?.courseDetails));
+    //     dispatch(setCompletedLectures(courseData?.completedVideos));
+
+    //     let lectures=0;
+    //     courseData?.courseDetails?.courseContent?.forEach((sec)=>{
+    //         lectures+=sec.subSection.length;
+    //     })
+
+    //     dispatch(setTotalNoOfLectures(lectures));
+    //     console.log("completed lectures:",courseData?.completedVideos);
+    // }
+
+    useEffect(()=>{
+        mutation.mutate();
+    },[]);
+
+    if(mutation.isPending){
+        return <div className='text-richblack-900'>Loading...</div>
+    }
+
+    if(mutation.isSuccess){
+        const courseData=mutation.data;
+        console.log("completed lectures:",courseData);
+
         dispatch(setCourseSectionData(courseData?.courseDetails?.courseContent));
         dispatch(setCourseEntireData(courseData?.courseDetails));
         dispatch(setCompletedLectures(courseData?.completedVideos));
@@ -27,12 +59,10 @@ const ViewCourse = () => {
         })
 
         dispatch(setTotalNoOfLectures(lectures));
-        console.log("completed lectures:",courseData?.completedVideos);
     }
 
-    useEffect(()=>{
-        viewCourseDetails();
-    },[]);
+
+
 
   return (
     <div>

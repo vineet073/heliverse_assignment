@@ -25,8 +25,5 @@ root.render(
           <Toaster/>
         </BrowserRouter>
       </Provider>
-  </QueryClientProvider>
-  
-  
-  
+  </QueryClientProvider>  
 );
