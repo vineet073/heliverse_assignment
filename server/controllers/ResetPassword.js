@@ -10,7 +10,7 @@ exports.resetPasswordToken=async(req,res)=>{
         const email=req.body.email;
         const user=await User.findOne({email:email});
         if(!user){
-            return res.status(401).success({
+            return res.status(401).json({
                 success:false,
                 message:"Not a registered email"
             })
