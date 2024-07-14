@@ -15,7 +15,7 @@ const MyProfile = () => {
       <div className='flex items-center justify-between bg-richblack-800 p-9 rounded-md border-[1px] border-richblack-600'>
         <div className='flex items-center gap-3'>
           <div >
-            <img className='aspect-square rounded-full w-16' src={user?.image}/>
+            <img className='aspect-square rounded-full w-16' src={user?.image} alt=''/>
           </div>
 
           <div>

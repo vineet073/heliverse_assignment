@@ -6,18 +6,11 @@ exports.createRatingandReview=async(req,res)=>{
     try {
         const userID = req.user.id
         const { rating, review, courseID } = req.body
-
-        console.log("user id:",userID);
-        console.log("course id:",courseID);
-    
-        // Check if the user is enrolled in the course
     
         const courseDetails = await Course.findById({
           _id: courseID,
           studentsEnrolled: { $elemMatch: { $eq: userID } },
         })
-
-        console.log("user details:",courseDetails);
     
         if (!courseDetails) {
           return res.status(404).json({
@@ -26,7 +19,6 @@ exports.createRatingandReview=async(req,res)=>{
           })
         }
     
-        // Check if the user has already reviewed the course
         const alreadyReviewed = await RatingAndReview.findOne({
           user: userID,
           course: courseID,
@@ -39,7 +31,6 @@ exports.createRatingandReview=async(req,res)=>{
           })
         }
     
-        // Create a new rating and review
         const ratingReview = await RatingAndReview.create({
           rating,
           review,
@@ -61,7 +52,6 @@ exports.createRatingandReview=async(req,res)=>{
           ratingReview,
         })
       } catch (error) {
-        console.error(error)
         return res.status(500).json({
           success: false,
           message: "Internal server error",
@@ -100,7 +90,6 @@ exports.getAverageRating=async(req,res)=>{
         });
 
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success:false,
             message:error.message,
@@ -130,7 +119,6 @@ exports.getAllRatingAndReview = async (req, res) => {
             });
     }   
     catch(error) {
-        console.log(error);
         return res.status(500).json({
             success:false,
             message:error.message,

@@ -1,4 +1,4 @@
-import { Route,Routes } from "react-router-dom";
+import { Navigate, Route,Routes } from "react-router-dom";
 import "./App.css";
 import { Home } from "./pages/Home";
 import NavBar from "./components/Common/NavBar";
@@ -25,11 +25,14 @@ import CourseDetails from "./pages/CourseDetails";
 import ViewCourse from "./pages/ViewCourse";
 import VideoDetails from "./components/Core/ViewCourse/VideoDetails";
 import Cart from "./pages/Cart";
+import Category from "./pages/Category";
+import AllInstructors from "./pages/AllInstructors";
+import ChatBot from "./components/Core/Chatbot/Chatbot";
 
 
 function App() {
   const{user}=useSelector((state)=>state.profile)
-
+  const{token}=useSelector((state)=>state.auth)
   return (
     <div className="w-full min-h-screen bg-richblack-900 flex flex-col font-inter">
       <NavBar/>
@@ -37,38 +40,29 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
 
-        <Route path="/login" element={
-              <Login/>
-        }/>
-
-        <Route path="/signup" element={
-              <Signup/>
-        }/>
-
-        <Route path="/verify-email" element={
-              <VerifyEmail/>
-        }/>
-
-        <Route path="/forgot-password" element={<ForgotPassword/>
-
-        }/>
-
-        <Route path="/update-password/:id" element={<ResetPassword/>}/>
+        <Route path="/login" element={!token ? <Login/> : <Navigate to="/dashboard/my-profile" replace />}/>
+        <Route path="/signup" element={!token ? <Signup/> : <Navigate to="/dashboard/my-profile" replace />}/>
+        <Route path="/verify-email" element={!token ? <VerifyEmail/> : <Navigate to="/dashboard/my-profile" replace />}/>
+        <Route path="/forgot-password" element={!token ? <ForgotPassword/> : <Navigate to="/dashboard/my-profile" replace />}/>
+        <Route path="/update-password/:id" element={!token ? <ResetPassword/> : <Navigate to="/dashboard/my-profile" replace />}/>   
 
         <Route path="/catalog/:catalogName" element={<Catalog/>}/>
         <Route path="/courses/:courseID" element={<CourseDetails/>}/>
 
-
         <Route element={
           <RestrictedRoute>
-              <Dashboard/>
+            <Dashboard/>
           </RestrictedRoute>
-          }>
+        }>
           <Route path="dashboard/my-profile" element={<MyProfile/>}/>
           <Route path="dashboard/settings" element={<Settings/>}/>
-   
+
+          <Route path="dashboard/category" element={<Category />} />
+          <Route path="dashboard/manage_instructors" element={<AllInstructors />}/>
+
           <Route path="dashboard/cart" element={<Cart/>} />
           <Route path="dashboard/enrolled-courses" element={<EnrolledCourses />} />
+
           
           <Route path="dashboard/instructor" element={<Instructor />} />
           <Route path="dashboard/my-courses" element={<InstructorCourses/>} />
@@ -86,12 +80,10 @@ function App() {
               />
             )
           }
-        </Route>
-        
+        </Route>        
 
         <Route path="/about" element={<AboutUs/>}/>
         <Route path="/contact" element={<ContactUs/>}/>
-
 
       </Routes>
 

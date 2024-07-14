@@ -16,16 +16,14 @@ const AboutUs = () => {
         <div className='bg-gradient-to-b from-richblack-700 to-richblack-900 w-[100vw]'>
           <div className='flex flex-col items-center'>
                 <p className='mb-10 mt-8'>About us</p>
-                <h1 className='text-3xl text-center font-semibold text-white'>Driving Innovation in Online Education for a <br/><HighlighText text={"Brighter Future"}/></h1>
-                <p className='w-[60vw] text-center text-sm'>Studynotion is at the forefront of driving innovation in online education. 
-                We're passionate about creating a brighter future by offering cutting-edge courses,
-                leveraging emerging technologies, and nurturing a vibrant learning community.</p>
+                <h1 className='text-3xl text-center font-semibold text-white'>Helping Student to get Online Degree for <br/><HighlighText text={"Brighter Future"}/></h1>
+                <p className='w-[60vw] text-center text-sm'>We assist students in pursuing online degrees for a brighter future, offering courses in Engineering Physics, Engineering Maths, Coding, and Core Subjects. Prepare for in-demand careers with flexible, accessible learning opportunities.</p>
           </div>
 
           <div className='flex gap-10 mt-8 flex-row justify-center'>
-              <img src={BannerImage1} />
-              <img src={BannerImage2}/>
-              <img src={BannerImage3}/>
+              <img src={BannerImage1} alt=''/>
+              <img src={BannerImage2} alt=''/>
+              <img src={BannerImage3} alt=''/>
           </div>
         </div>        
 
@@ -51,11 +49,11 @@ const AboutUs = () => {
         <div className='w-[80vw] flex gap-32'>
           <div>
             <h1 className='text-3xl bg-gradient-to-br from-[#E65C00] to-[#F9D423] bg-clip-text font-semibold  text-transparent'>Our Vision</h1>
-            <p className='text-sm text-justify'>With this vision in mind, we set out on a journey to create an e-learning platform that would revolutionize the way people learn. Our team of dedicated experts worked tirelessly to develop a robust and intuitive platform that combines cutting-edge technology with engaging content, fostering a dynamic and interactive learning experience.</p>
+            <p className='text-sm text-justify'>Our vision is to empower students worldwide by providing accessible online education that prepares them for successful careers and a brighter future. We aim to bridge the gap between education and employment, enabling individuals to achieve their academic goals and contribute meaningfully to society.</p>
           </div>
           <div>
             <h1 className='text-3xl'><HighlighText text={'Our Mission'}/></h1>            
-            <p className='text-sm text-justify'>our mission goes beyond just delivering courses online. We wanted to create a vibrant community of learners, where individuals can connect, collaborate, and learn from one another. We believe that knowledge thrives in an environment of sharing and dialogue, and we foster this spirit of collaboration through forums, live sessions, and networking opportunities.</p>
+            <p className='text-sm text-justify'>Our mission is to offer comprehensive online degree programs and courses in key disciplines such as Engineering Physics, Engineering Maths, Coding, and Core Subjects. We strive to deliver high-quality education with flexibility and affordability, ensuring students gain the skills and knowledge necessary to thrive in today's competitive job market.</p>
           </div>
         </div>
 
@@ -66,26 +64,22 @@ const AboutUs = () => {
           </div>
 
           <div className='flex flex-col items-center'>
-            <p className='text-white text-3xl'>10+</p>
-            <p className='text-sm font-semibold'>Mentors</p>
-          </div>
-
-          <div className='flex flex-col items-center'>
-            <p className='text-white text-3xl'>200+</p>
-            <p className='text-sm font-semibold'>Courses</p>
+            <p className='text-white text-3xl'>30+</p>
+            <p className='text-sm font-semibold'>Instructors</p>
           </div>
 
           <div className='flex flex-col items-center'>
             <p className='text-white text-3xl'>50+</p>
-            <p className='text-sm font-semibold'>Awards</p>
+            <p className='text-sm font-semibold'>Courses</p>
           </div>
+
         </div>
 
         <div className='grid grid-rows-2 grid-cols-4 w-[80vw]'>
           <div className='col-span-2 flex flex-col mr-20 '>
             <h1 className='text-3xl text-richblack-5 mb-3'>World-Class Learning for <br/> <HighlighText text={'Anyone, Anywhere'}/></h1>
-            <p>Studynotion partners with more than 275+ leading universities and companies 
-            to bring flexible, affordable, job-relevant online learning to individuals and organizations worldwide.</p>
+            <p>ScholarSpace partners with leading universities and companies 
+            to bring flexible, affordable, job-relevant online degrees courses to individuals and organizations worldwide.</p>
             <div className='w-fit items-end mt-8'><CTAButton linkto={'/'} active={true}> Learn More</CTAButton></div>
           </div>
 

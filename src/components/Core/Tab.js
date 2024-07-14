@@ -9,8 +9,8 @@ const Tab = ({tabData,field,setField}) => {
       {
         tabData.map((data,index)=>{
             return(
-                <div key={data.id} onClick={()=>setField(data.type)}
-                className={`${data.type===field?"bg-richblack-900 text-richblack-5":"bg-transparent text-richblack-200"}
+                <div key={data.id} onClick={()=>setField(data.tabName)}
+                className={`${data.tabName===field?"bg-richblack-900 text-richblack-5":"bg-transparent text-richblack-200"}
                 rounded-full py-1 px-4`}>
                     {data.tabName}
                 </div>

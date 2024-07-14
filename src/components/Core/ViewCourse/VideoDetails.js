@@ -6,6 +6,9 @@ import { updateCompletedLectures } from '../../../slices/viewCourseSlice';
 import ReactPlayer from 'react-player';
 import IconBtn from '../../Common/IconBtn';
 import { FaCirclePlay } from "react-icons/fa6";
+import ChatBot from '../Chatbot/Chatbot';
+import { IoChatbubblesSharp } from "react-icons/io5";
+
 
 const VideoDetails = () => {
   const{courseID,sectionID,subSectionID}=useParams();
@@ -15,12 +18,18 @@ const VideoDetails = () => {
   const dispatch=useDispatch();
   const {token}=useSelector((state)=>state.auth);
   const{courseSectionData, courseEntireData, completedLectures}=useSelector((state)=>state.viewCourse);
-  // console.log("completed lectures:",completedLectures);
 
   const[videoData,setVideoData]=useState([]);
   const [previewSource,setPreviewSource]=useState("");
   const [videoEnded,setVideoEnded]=useState(false);
   const [loading,setLoading]=useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+
+  function handleFullScreenChange(){
+    const isPlayerFullScreen = document.fullscreenElement === playerRef.current.wrapper;
+    setIsFullScreen(isPlayerFullScreen);
+  }
 
   function videoDetails(){
     if(!courseSectionData.length) return;
@@ -44,7 +53,15 @@ const VideoDetails = () => {
   useEffect(()=>{
     videoDetails();
   },[courseSectionData,courseEntireData,location.pathname]);
-console.log("video ended",videoEnded);
+
+  useEffect(()=>{
+    document.addEventListener('fullscreenchange',handleFullScreenChange);
+
+    return ()=>{
+      document.removeEventListener('fullscreenchange',handleFullScreenChange);
+    }
+  },[]);
+
   function isFirstVideo(){
     const sectionIndex=courseSectionData.findIndex((data)=>
     data._id === sectionID);
@@ -88,7 +105,6 @@ console.log("video ended",videoEnded);
     courseSectionData[sectionIndex].subSection.length;
 
     if(subSectionIndex !== noOfSubsections-1){
-      console.log("sub section index:",subSectionIndex);
       const nextSubSectionID=courseSectionData[sectionIndex]?.subSection[subSectionIndex + 1]._id;
       navigate(
         `/view-course/${courseID}/section/${sectionID}/sub-section/${nextSubSectionID}`
@@ -145,6 +161,7 @@ console.log("video ended",videoEnded);
           <div>
             <img
               src={previewSource}
+              alt='preview'
             />
           </div>
         ):(
@@ -157,15 +174,26 @@ console.log("video ended",videoEnded);
               controls
               playIcon={<FaCirclePlay />}
               width={'78vw'}
-              height={'80vh'}
-            />  
-            {
-              videoEnded && (
-              <div style={{
+              height={'80vh'}/>  
+            
+            {!isFullScreen && (
+              <button onClick={(e) => {
+                e.stopPropagation();
+                setShowChat(!showChat)
+                }} className='absolute right-14 bottom-20 z-[11] group'>
+                {showChat ? <ChatBot setShowChat={setShowChat} showChat={showChat}/> :
+                 <div className='bg-white p-[0.45rem] rounded-full'>
+                  <IoChatbubblesSharp className='text-richblack-900 transition-all duration-200 group-hover:text-yellow-200' fontSize={30}/>
+                 </div>}
+              </button>
+            )}
+
+            {videoEnded && (
+            <div style={{
               backgroundImage:
                 "linear-gradient(to top, rgb(0, 0, 0), rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.1)",
-            }}
-            className="absolute inset-0 z-[100] grid h-full place-content-center font-inter">
+              }}
+              className="absolute inset-0 z-[10] grid h-full place-content-center font-inter">
               {
                 !completedLectures?.includes(subSectionID) && (
                   <IconBtn
@@ -194,8 +222,7 @@ console.log("video ended",videoEnded);
                   <button
                     disabled={loading}
                     onClick={()=>goToPrev()}
-                    className="blackButton"
-                  >
+                    className="blackButton">
                     Prev
                   </button>
                 )}
@@ -203,15 +230,13 @@ console.log("video ended",videoEnded);
                   <button
                     disabled={loading}
                     onClick={()=>goToNext()}
-                    className="blackButton"
-                  >
+                    className="blackButton">
                     Next
                   </button>
                 )}
-            </div>
               </div>
-              )
-            } 
+            </div>
+            )} 
           </div>
                
         )

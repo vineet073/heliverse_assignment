@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCourseCategory } from '../../../../services/AuthApi/CourseApi';
 import { addCourseDetails,editCourseDetails } from '../../../../services/AuthApi/CourseApi';
-import {FaRupeeSign} from 'react-icons/fa';
 import Requirements from '../AddForm/Requirements';
 import Upload  from './Upload';
 import Tags from './Tags';
@@ -37,7 +36,7 @@ export default function CourseInformationForm() {
       }
       setLoading(false)
     }
-    // if form is in edit mode
+
     if (editCourse) {
       setValue("courseTitle", course.courseName)
       setValue("courseShortDesc", course.courseDescription)
@@ -53,7 +52,6 @@ export default function CourseInformationForm() {
 
   const isFormUpdated = () => {
     const currentValues = getValues();
-    console.log(currentValues);
     if (
       currentValues.courseTitle !== course.courseName ||
       currentValues.courseShortDesc !== course.courseDescription ||
@@ -107,7 +105,7 @@ export default function CourseInformationForm() {
         if (currentValues.courseImage !== course.thumbnail) {
           formData.append("thumbnailImage", data.courseImage)
         }
-        // console.log("Edit Form data: ", formData)
+
         setLoading(true)
         const result = await editCourseDetails(formData, token)
         setLoading(false)
@@ -162,7 +160,7 @@ export default function CourseInformationForm() {
           </span>
         )}
       </div>
-      {/* Course Short Description */}
+
       <div className="flex flex-col space-y-2">
         <label className="text-sm text-richblack-5" htmlFor="courseShortDesc">
           Course Short Description <sup className="text-pink-200">*</sup>
@@ -179,7 +177,7 @@ export default function CourseInformationForm() {
           </span>
         )}
       </div>
-      {/* Course Price */}
+
       <div className="flex flex-col space-y-2">
         <label className="text-sm text-richblack-5" htmlFor="coursePrice">
           Course Price <sup className="text-pink-200">*</sup>
@@ -205,7 +203,7 @@ export default function CourseInformationForm() {
           </span>
         )}
       </div>
-      {/* Course Category */}
+
       <div className='flex flex-col gap-2'>
               <label className='text-sm text-richblack-5' htmlFor='courseCategory'>Course Category<sup className='text-pink-400 text-base'>*</sup></label>
               <select
@@ -236,7 +234,7 @@ export default function CourseInformationForm() {
                 }
              
           </div>
-      {/* Course Tags */}
+
       <Tags
         label="Tags"
         name="courseTags"
@@ -246,7 +244,7 @@ export default function CourseInformationForm() {
         setValue={setValue}
         getValues={getValues}
       />
-      {/* Course Thumbnail Image */}
+
       <Upload
         name="courseImage"
         label="Course Thumbnail"
@@ -255,7 +253,7 @@ export default function CourseInformationForm() {
         errors={errors}
         editData={editCourse ? course?.thumbnail : null}
       />
-      {/* Benefits of the course */}
+
       <div className="flex flex-col space-y-2">
         <label className="text-sm text-richblack-5" htmlFor="courseBenefits">
           Benefits of the course <sup className="text-pink-200">*</sup>
@@ -272,7 +270,7 @@ export default function CourseInformationForm() {
           </span>
         )}
       </div>
-      {/* Requirements/Instructions */}
+
       <Requirements
         name="courseRequirements"
         label="Requirements/Instructions"
@@ -281,7 +279,7 @@ export default function CourseInformationForm() {
         errors={errors}
         getValues={getValues}
       />
-      {/* Next Button */}
+
       <div className="flex justify-end gap-x-2">
         {editCourse && (
           <button

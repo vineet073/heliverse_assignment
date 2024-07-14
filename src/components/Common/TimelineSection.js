@@ -31,7 +31,7 @@ const timeline = [
 
 export const TimelineSection = () => {
   return (
-    <div className='flex flex-row justify-center mx-auto bg-pure-greys-5 w-[80%] text-richblack-900 pt-20 gap-32'>
+    <div className='flex flex-row justify-center mx-auto bg-pure-greys-5 w-[80%] text-richblack-900 pt-20 gap-32 mb-28'>
        
         
             <div className='mt-20'>
@@ -60,11 +60,11 @@ export const TimelineSection = () => {
                     
                     <div className='absolute flex py-7 translate-x-32 -translate-y-10 bg-caribbeangreen-700 text-white'>
                         <div className='flex gap-5 px-7 items-center border-r'>
-                            <div className='text-3xl font-semibold '>10</div>
-                            <div className='text-sm text-caribbeangreen-200'>YEARS OF<br/> EXPERIENCES</div>
+                            <div className='text-3xl font-semibold '>30+</div>
+                            <div className='text-sm text-caribbeangreen-200'>Experienced<br/> Professors</div>
                         </div>
                         <div className='flex gap-5 px-7 items-center'>
-                            <div className='text-3xl font-semibold '>250</div>
+                            <div className='text-3xl font-semibold '>50+</div>
                             <div className='text-sm text-caribbeangreen-200'>TYPES OF <br/>COURSES</div>
                         </div>
                     </div>

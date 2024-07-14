@@ -10,36 +10,36 @@ html,body{
 }
 
 .spinner {
-    width: 56px;
-    height: 56px;
-    display: grid;
-    animation: spinner-plncf9 4s infinite;
-    margin-top: auto;
-    margin-left: auto;
-    margin-bottom: auto;
-    margin-right: auto;
- }
+   width: 56px;
+   height: 56px;
+   display: grid;
+   animation: spinner-plncf9 4s infinite;
+   margin-top: auto;
+   margin-left: auto;
+   margin-bottom: auto;
+   margin-right: auto;
+}
  
- .spinner::before,
- .spinner::after {
-    content: "";
-    grid-area: 1/1;
-    border: 9px solid;
-    border-radius: 50%;
-    border-color: #537988 #537988 #0000 #0000;
-    mix-blend-mode: darken;
-    animation: spinner-plncf9 1s infinite linear;
- }
+.spinner::before,
+.spinner::after {
+   content: "";
+   grid-area: 1/1;
+   border: 9px solid;
+   border-radius: 50%;
+   border-color: #537988 #537988 #0000 #0000;
+   mix-blend-mode: darken;
+   animation: spinner-plncf9 1s infinite linear;
+}
  
- .spinner::after {
-    border-color: #0000 #0000 #dbdcef #dbdcef;
-    animation-direction: reverse;
- }
+.spinner::after {
+   border-color: #0000 #0000 #dbdcef #dbdcef;
+   animation-direction: reverse;
+}
  
- @keyframes spinner-plncf9 {
-    100% {
-       transform: rotate(1turn);
-    }
+@keyframes spinner-plncf9 {
+   100% {
+      transform: rotate(1turn);
+   }
 }
 
 ::-webkit-scrollbar{
@@ -54,3 +54,47 @@ html,body{
    background: #DBDDEA;
    border-radius: 4px;
 }
+
+.message {
+display: flex;
+justify-content: flex-start;
+padding: 10px;
+}
+
+.message-bot, .message-error {
+justify-content: flex-end;
+}
+
+.message-content {
+max-width: 80%;
+padding: 8px;
+border-radius: 10px;
+box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+text-align: justify;
+}
+
+.user-message {
+background-color: #202C33;
+}
+
+.bot-message, .error-message {
+background-color: #005C4B;
+} 
+
+.loader {
+   width: 45px;
+   aspect-ratio: 2;
+   --_g: no-repeat radial-gradient(circle closest-side,#fff 90%,#0000);
+   background: 
+     var(--_g) 0%   50%,
+     var(--_g) 50%  50%,
+     var(--_g) 100% 50%;
+   background-size: calc(100%/3) 50%;
+   animation: l3 1s infinite linear;
+ }
+ @keyframes l3 {
+   20%{background-position:0%   0%, 50%  50%,100%  50%}
+   40%{background-position:0% 100%, 50%   0%,100%  50%}
+   60%{background-position:0%  50%, 50% 100%,100%   0%}
+   80%{background-position:0%  50%, 50%  50%,100% 100%}
+ }

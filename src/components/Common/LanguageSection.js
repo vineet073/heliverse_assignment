@@ -13,9 +13,9 @@ export const LanguageSection = () => {
         Using spin making learning multiple languages easy. with 20+ languages realistic voice-over, progress tracking, custom schedule and more.
         </div>
         <div className='flex mt-12'>
-            <img src={know_your_progress} className='translate-x-20'/>
-            <img src={compare_with_others} className='-translate-x-10'/>
-            <img src={plan_your_lesson} className='-translate-x-44'/>
+            <img src={know_your_progress} className='translate-x-20' alt=''/>
+            <img src={compare_with_others} className='-translate-x-10' alt=''/>
+            <img src={plan_your_lesson} className='-translate-x-44' alt=''/>
         </div>
         <div className='w-fit mt-10'>
             <CTAButton linkto={'/login'} active={true}>Learn More</CTAButton>

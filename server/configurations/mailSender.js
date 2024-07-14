@@ -1,6 +1,5 @@
 const nodemailer=require('nodemailer');
 require('dotenv').config();
-// const ContactUsEmail=require('../templates/contactFormRes');
 
 const mailSender=async (email,title,body)=>{
 
@@ -19,10 +18,8 @@ const mailSender=async (email,title,body)=>{
             subject:`${title}`,
             html:`${body}`
         })
-        console.log("email response: ",response);
     } catch (error) {
-        console.error(error);
-        console.log("error occurred while sending mail:",error.message);
+        throw new Error(error.message);
     }
    
 }

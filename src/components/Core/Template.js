@@ -1,4 +1,3 @@
-import { FcGoogle } from "react-icons/fc"
 import { useSelector } from "react-redux"
 
 import frameImg from "../../assets/Images/frame.png"
@@ -9,7 +8,7 @@ function Template({ title, description1, description2, image, formType }) {
   const { loading } = useSelector((state) => state.auth)
 
   return (
-    <div className="flex overflow-y-hidden mt-20">
+    <div className="flex overflow-y-hidden mt-6">
       {loading ? (
         <div className="spinner"></div>
       ) : (
@@ -26,7 +25,7 @@ function Template({ title, description1, description2, image, formType }) {
             </p>
             {formType === "signup" ? <SignupForm /> : <LoginForm />}
           </div>
-          <div className="relative mx-auto w-11/12 max-w-[450px] md:mx-0">
+          <div className="relative mx-auto my-auto w-11/12 max-w-[450px] md:mx-0">
             <img
               src={frameImg}
               alt="Pattern"

@@ -44,7 +44,7 @@ index.use("/api/v1/course", courseRoutes);
 index.use("/api/v1/payment", paymentRoutes);
 index.use("/api/v1/", ContactRoutes);
 
-index.get("/", (req, res) => {
+index.get("/", (res) => {
 	return res.json({
 		success:true,
 		message:'Your server is up and running....'

@@ -100,7 +100,6 @@ const CourseBuilderForm = () => {
               className='w-full rounded-md py-2 px-2 bg-richblack-700 style focus:outline-0 text-richblack-5'
               placeholder='Add a section to build your course'
               {...register("sectionName",{required:true})}
-            //   defaultValue={user?.courseTitle}
               />
                 {
                   errors.sectionName &&(

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import {set, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import { useState } from 'react';
 import CountryCode from '../../data/countrycode.json'
-import { CTAButton } from './CTAButton';
 import ApiConnector from '../../services/ApiConnector'
 import { contactusEndpoint } from '../../services/Api';
 
@@ -29,16 +28,13 @@ const Contact = () => {
 
     const{CONTACT_US_API}=contactusEndpoint;
     const onSubmitHandler=async(data)=>{
-        console.log("form data->",data);
         try {
             setLoading(true);
             const res=await ApiConnector("POST",
             CONTACT_US_API,
             data);
-            console.log("response",res);
             setLoading(false);
         } catch (error) {
-            console.log("Error:",error.message);
             setLoading(false);
         }
     }
@@ -121,7 +117,7 @@ const Contact = () => {
                 </select>
 
                 <input
-                type='number'
+                type='text'
                 placeholder='12345 67890'
                 name='phonenumber'
                 id='phonenumber'

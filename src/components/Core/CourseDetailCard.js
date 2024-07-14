@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
 import {addToCart} from '../../slices/cartSlice';
 import copy from 'copy-to-clipboard';
-import IconBtn from '../Common/IconBtn';
 import { MdPlayArrow } from "react-icons/md";
 import { RiShareForward2Fill } from "react-icons/ri";
 
@@ -45,9 +44,9 @@ const CourseDetailCard = ({course,setConfirmationModal,handleBuyCourse}) => {
         toast.success("Link Copied to clipboard");
     }
   return (
-    <div className='text-white absolute top-16 w-[24vw]  bg-richblack-700 p-4 right-32 rounded-md'>
+    <div className='text-white absolute top-16 w-[24vw]  bg-richblack-700 p-4 right-28 rounded-md'>
       <div>
-        <img src={ThumbnailImage} className='rounded-md'/>
+        <img src={ThumbnailImage} className='rounded-md' alt=''/>
       </div>
 
       <div className='mt-3 p-2 flex flex-col gap-3'>

@@ -40,7 +40,6 @@ const coursesSchema = new mongoose.Schema({
 	studentsEnrolled: [
 		{
 			type: mongoose.Schema.Types.ObjectId,
-			required: true,
 			ref: "User",
 		},
 	],
@@ -52,11 +51,6 @@ const coursesSchema = new mongoose.Schema({
 		type: String,
 		enum: ["Draft", "Published"],
 	},
-	// createdAt:{
-    //     type:Date,
-    //     required:true,
-    //     default:Date.now
-    // }
 },
 {timestamps:true});
 

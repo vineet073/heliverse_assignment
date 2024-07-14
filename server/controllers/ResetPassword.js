@@ -10,9 +10,9 @@ exports.resetPasswordToken=async(req,res)=>{
         const email=req.body.email;
         const user=await User.findOne({email:email});
         if(!user){
-            return res.status(401).json({
-                success:false,
-                message:"Not a registered email"
+            return res.status(404).json({
+                success:true,
+                message:"Email not found"
             })
         }
         const token=crypto.randomBytes(20).toString("hex");
@@ -23,7 +23,6 @@ exports.resetPasswordToken=async(req,res)=>{
             },
             {new:true}
         );
-        console.log("details:",updatedDetails);
 
         const resetUrl=`http://localhost:3000/update-password/${token}`;
         await mailSender(email,"Password Reset Link",`Password Reset link:\n ${resetUrl}`);
@@ -34,7 +33,6 @@ exports.resetPasswordToken=async(req,res)=>{
         })
 
     } catch (error) {
-        console.error(error);
         return res.status(500).json({
             success:false,
             message:"Something went wrong while reset of password"
@@ -78,7 +76,6 @@ exports.resetPassword=async(req,res)=>{
             message:"Password updated successfully"
         });
     } catch (error) {
-        console.error(error);
         return res.status(200).json({
             success:false,
             message:error.message

@@ -13,7 +13,7 @@ const DeleteAccount = () => {
     try {
       dispatch(deleteAccount(token,navigate));
     } catch (error) {
-      console.log("error in deletig account->",error);
+      throw new Error(error);
     }
   }
   return (

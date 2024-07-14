@@ -47,9 +47,14 @@ const userSchema=new mongoose.Schema({
     courseProgress:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"CourseProgress"
-    }]
-
-    
+    }],
+    resume:{
+        type:String,
+    },    
+    isVerified:{
+        type:Boolean,
+        default:false
+    },
 },
 {timestamps:true}
 );

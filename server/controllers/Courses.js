@@ -29,7 +29,6 @@ exports.createCourse=async(req,res)=>{
         }
 
         const CategoryDetails=await Category.findById(category);
-        console.log("category->>",CategoryDetails);
         if(!CategoryDetails){
             return res.status(400).json({
                 success:false,
@@ -52,7 +51,7 @@ exports.createCourse=async(req,res)=>{
         })
         }
 
-        const thumbnailImage=await cloudinaryUploader(thumbnail,process.env.FOLDER);
+        const thumbnailImage=await cloudinaryUploader(thumbnail,process.env.FOLDER_NAME);
         const newCourse=await Course.create({
             courseName,
             courseDescription,
@@ -143,7 +142,6 @@ exports.editCourse=async(req,res)=>{
             }
         }).exec();
 
-        console.log(updatedCourse);
         res.status(200).json({
             success:true,
             message:"Course edited successfully",
@@ -151,7 +149,6 @@ exports.editCourse=async(req,res)=>{
         })
 
     } catch (error) {
-        console.log(error);
         res.status(500).json({
             success:false,
             message:"Internal server error",
@@ -162,7 +159,6 @@ exports.editCourse=async(req,res)=>{
 
 exports.showAllCourses = async (req, res) => {
     try {
-            //TODO: change the below statement incrementally
             const allCourses = await Course.find({});
 
             return res.status(200).json({
@@ -173,7 +169,6 @@ exports.showAllCourses = async (req, res) => {
 
     }
     catch(error) {
-        console.log(error);
         return res.status(500).json({
             success:false,
             message:'Cannot Fetch course data',
@@ -221,7 +216,6 @@ exports.getCourseDetails=async(req,res)=>{
     
         const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
-
         return res.status(200).json({
             success:true,
             message:"Course Details fetched successfully",
@@ -229,7 +223,6 @@ exports.getCourseDetails=async(req,res)=>{
             totalDuration
         })
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success:false,
             message:error.message,
@@ -241,8 +234,6 @@ exports.fetchFullCourseDetails=async(req,res)=>{
     try {
         const {courseID}=req.body;
         const userID = req.user.id;
-        // console.log("course id", courseID);
-        // console.log("user id:",userID);
         const courseDetails=await Course.findOne({_id:courseID})
         .populate({
             path: "instructor",
@@ -278,12 +269,11 @@ exports.fetchFullCourseDetails=async(req,res)=>{
     
         const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
-        var courseProgressCount = await CourseProgress.find(
-            { courseID: courseID,
-              userID: userID,}
-        )
+        var courseProgressCount = await CourseProgress.find({ 
+            courseID: courseID,
+            userID: userID
+        })
         
-        console.log("course progress count:",courseProgressCount[0].completedVideos);
         return res.status(200).json({
             success:true,
             message:"Course Details fetched successfully",
@@ -293,7 +283,6 @@ exports.fetchFullCourseDetails=async(req,res)=>{
             courseProgressCount[0].completedVideos:[]
         })
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             success:false,
             message:error.message,
@@ -307,14 +296,35 @@ exports.getInstructorCourses = async (req, res) => {
       const instructorID = req.user.id;
 
       const instructorCourses = await Course.find({instructor: instructorID})
-      .sort({ createdAt: -1 });
-  
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .sort({ createdAt: -1 })
+      .lean();
+
+      instructorCourses.forEach((course) => {
+        let totalDurationInSeconds = 0
+        course?.courseContent.forEach((content) => {
+            content?.subSection.forEach((subSection) => {
+              const timeDurationInSeconds = parseInt(subSection?.timeDuration)
+              totalDurationInSeconds += timeDurationInSeconds
+            })
+        })
+
+        console.log("totalDurationInSeconds", totalDurationInSeconds);
+        course.totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+      });    
+      
+      console.log("instructorCourses", instructorCourses);
+
       res.status(200).json({
         success: true,
         instructorCourses
       });
     } catch (error) {
-      console.error(error)
       res.status(500).json({
         success: false,
         message: "Failed to retrieve instructor courses",

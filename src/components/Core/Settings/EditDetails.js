@@ -21,11 +21,10 @@ const EditDetails = () => {
   }=useForm();
 
   const onSubmitHandler = async (data) => {
-    console.log("Form Data - ", data)
     try {
       dispatch(updateProfile(token, data))
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+      throw new Error(error)
     }
   }
 

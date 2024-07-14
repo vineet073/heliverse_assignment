@@ -8,20 +8,20 @@ const contactDetails = [
       icon: "HiChatBubbleLeftRight",
       heading: "Chat on us",
       description: "Our friendly team is here to help.",
-      details: "info@studynotion.com",
+      details: "help@iiitm.ac.in",
     },
     {
       icon: "BiWorld",
       heading: "Visit us",
-      description: "Come and say hello at our office HQ.",
+      description: "Come and say hello at our college campus.",
       details:
-        "Akshya Nagar 1st Block 1st Cross, Rammurthy nagar, Bangalore-560016",
+        "IIITM Gwalior, Morena Link Road, Gwalior, Madhya Pradesh, India.",
     },
     {
       icon: "IoCall",
       heading: "Call us",
-      description: "Mon - Fri From 8am to 5pm",
-      details: "+123 456 7869",
+      description: "Mon - Fri From 10am to 5pm",
+      details: "+91 12345 67869",
     },
   ]
   

@@ -14,14 +14,8 @@ export default function EnrolledCourses() {
 
 
   async function getEnrolledCourses(){
-      try{
-
-          const response = await getUserEnrolledCourses(token);
-          setEnrolledCourses(response);
-      }
-      catch(error) {
-          console.log("Unable to Fetch Enrolled Courses");
-      }
+    const response = await getUserEnrolledCourses(token);
+    setEnrolledCourses(response);
   }
 
   useEffect(()=> {
@@ -40,38 +34,41 @@ return (
             : (
                 <div>
                     <div className='flex bg-richblack-600 justify-between p-2 rounded-t-md text-richblack-25'>
-                        <p className='w-64'>Course Name</p>
-                        <p className='w-52'>Durations</p>
-                        <p className='w-52'>Progress</p>
+                        <p className='max-w-[60%] min-w-[60%]'>Course Name</p>
+                        <p className='max-w-[10%] min-w-[10%] text-center'>Durations</p>
+                        <p className='max-w-[30%] min-w-[30%] text-center'>Progress</p>
                     </div>
 
                     {
                         enrolledCourses.map((course,index)=> (
-                            <div key={index} className='flex justify-between p-3 border-1 rounded-b-md border border-richblack-700'>
-                                <div className='flex gap-5' 
+                            <div key={index} className='flex p-3 border-1 rounded-b-md border border-richblack-700'>
+                                <div className='flex gap-5 max-w-[60%] min-w-[60%]' 
                                     onClick={() => {
                                      navigate(
                                     `/view-course/${course?._id}/section/${course.courseContent?.[0]?._id}/sub-section/${course.courseContent?.[0]?.subSection?.[0]?._id}`
                                     )
                                     }}>
-                                    <img  src={course.thumbnail} className='w-12 rounded-lg aspect-square'/>
+                                    <img  src={course.thumbnail} className='w-12 rounded-lg aspect-square' alt=''/>
                                     <div>
                                         <p className='text-md text-richblack-25'>{course.courseName}</p>
                                         <p className='text-sm text-richblack-100'>{course.courseDescription.substring(0,30)}</p>
                                     </div>
                                 </div>
   
-                                <div>
+                                <div className='max-w-[10%] min-w-[10%] text-center'>
                                     {course?.totalDuration || '2hr 30 mins'}
                                 </div>
   
-                                <div className='w-52'>
-                                    <p>Progress: {course?.progressPercentage}%</p>
-                                    <ProgressBar
-                                        completed={course?.progressPercentage}
-                                        height='8px'
-                                        isLabelVisible={false}
+                                <div className='max-w-[30%] min-w-[30%] flex'>
+                                    <div className='w-full text-center pl-10'>
+                                        <p>Progress: {course?.progressPercentage}%</p>
+                                        <ProgressBar
+                                            completed={course?.progressPercentage}
+                                            height='8px'
+                                            isLabelVisible={false}
                                         />
+                                    </div>
+                                    
                                 </div>
                             </div>
                         ))

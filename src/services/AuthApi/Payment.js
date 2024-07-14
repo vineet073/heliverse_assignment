@@ -64,10 +64,8 @@ export async function buyCourse(token,courses,userDetails,navigate,dispatch){
         paymentObject.open();
         paymentObject.on("payment.failed", function(response) {
             toast.error("oops, payment failed");
-            console.log(response.error);
         })
     } catch (error) {
-        console.log("PAYMENT API ERROR.....", error);
         toast.error("Could not make Payment");
     }
     toast.dismiss(toastID);
@@ -81,7 +79,6 @@ async function sendPaymentSuccessEmail(response,amount,token){
             amount
         },{Authorization:`Bearer ${token}`})
     } catch (error) {
-        console.log("PAYMENT SUCCESS EMAIL ERROR....", error);
     }
 }
 
@@ -100,7 +97,6 @@ async function verifyPayment(bodyData,token,navigate,dispatch){
         dispatch(resetCart());
 
     }catch(error) {
-        console.log("PAYMENT VERIFY ERROR....", error);
         toast.error("Could not verify Payment");
     }
     toast.dismiss(toastID);

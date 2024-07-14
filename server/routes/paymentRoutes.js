@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router();
 
-const {isAuthorized,isStudent,isAdmin,isInstructor}=require('../middlewares/authorization');
+const {isAuthorized,isStudent}=require('../middlewares/authorization');
 const {capturePayment,verifyPayment,sendPaymentSuccessfulMail}=require('../controllers/Payment');
 
 

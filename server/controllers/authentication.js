@@ -9,7 +9,6 @@ require('dotenv').config();
 const { passwordUpdated } = require('../templates/passwordUpdate');
 
 
-
 exports.sendOTP=async(req,res)=>{
     try {
         const {email}=req.body;
@@ -38,7 +37,6 @@ exports.sendOTP=async(req,res)=>{
 
         const otpPayload={email,otp};
         const otpBody=await OTP.create(otpPayload);
-        console.log(otpBody);
 
         return res.status(200).json({
             success:true,
@@ -48,8 +46,6 @@ exports.sendOTP=async(req,res)=>{
 
 
     } catch (error) {
-        console.error(error);
-        console.log(error.message);
         return res.status(500).json({
             success:false,
             message:error.message,
@@ -68,7 +64,7 @@ exports.signUP=async(req,res)=>{
         confirmPassword,
         accountType,
         contactNumber,
-        otp}=req.body;
+        otp,resume}=req.body;
         
         if(!firstName||!email||!password||!confirmPassword||!accountType||!otp){
             return res.status(403).json({
@@ -93,6 +89,17 @@ exports.signUP=async(req,res)=>{
         }
 
 
+        if(accountType==="Instructor"){
+
+            if(!resume){
+                return res.status(400).json({
+                    success:false,
+                    message:"Please upload resume"
+                })
+            }
+        }
+
+
         const recentOTP=await OTP.find({email}).sort({createdAt:-1}).limit(1);
 
 
@@ -111,7 +118,6 @@ exports.signUP=async(req,res)=>{
         var hashedPassword=await bcrypt.hash(password,10);
         console.log("hashed password:",hashedPassword);
 
-
         const profileData=await Profile.create({
             gender:null,
             dateOfBirth:null,
@@ -127,8 +133,8 @@ exports.signUP=async(req,res)=>{
             password:hashedPassword,
             accountType,
             additionalDetails:profileData._id,
-            accountType,
             image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
+            resume:resume ? resume : null
         })
 
         return res.status(200).json({
@@ -139,8 +145,10 @@ exports.signUP=async(req,res)=>{
 
 
     } catch (error) {
-        console.error(error);
-        console.log(error.message);
+        return res.status(500).json({
+            success:false,
+            message:error.message
+        })
     }
 }
 
@@ -163,6 +171,13 @@ exports.login=async(req,res)=>{
             })
         }
 
+        if(user.accountType==="Instructor" && user.isVerified===false){
+            return res.status(401).json({
+                success:false,
+                message:"Please wait for the admin to verify your account"
+            })
+        }
+        
         if(await bcrypt.compare(password,user.password)){
             const payload={
                 email:user.email,
@@ -171,7 +186,7 @@ exports.login=async(req,res)=>{
             }
 
             const token=jwt.sign(payload,process.env.JWT_SECRET,{
-                expiresIn:"2h",
+                expiresIn:"7d",
             });
             user.token=token;
             user.password=undefined;
@@ -194,7 +209,6 @@ exports.login=async(req,res)=>{
             })
         }
     } catch (error) {
-        console.error(error);
         return res.status(500).json({
             success:false,
             message:"Login Failure"
@@ -240,9 +254,7 @@ exports.changePassword=async(req,res)=>{
                 `${updatedUser.firstName} ${updatedUser.lastName}`
               )
             )
-            console.log("Email sent successfully:", emailResponse)
           } catch (error) {
-            console.error("Error occurred while sending email:", error)
             return res.status(500).json({
               success: false,
               message: "Error occurred while sending email",
@@ -255,7 +267,6 @@ exports.changePassword=async(req,res)=>{
             message:"Password updated successfully",
         })
     } catch (error) {
-        console.error(error);
         return res.status(401).json({
             success:false,
             message:error.message

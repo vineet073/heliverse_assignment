@@ -11,10 +11,9 @@ const CourseProgress=require('../models/CourseProgress');
 
 exports.capturePayment=async(req,res)=>{
     const {courses}=req.body;
-    console.log(courses);
     const userID=req.user.id;
 
-    if(courses.length ==0){
+    if(courses.length === 0){
         return res.json({
             success:false,
             message:"Please provide courses"
@@ -43,7 +42,6 @@ exports.capturePayment=async(req,res)=>{
 
             totalAmount+=course.price;
         } catch (error) {
-            console.log(error);
             return res.status(500).json({
                 success:false,
                 message:error.message
@@ -65,7 +63,6 @@ exports.capturePayment=async(req,res)=>{
             message:paymentResponse
         })
     } catch (error) {
-        console.log(error);
         return res.status(500).json({success:false, mesage:"Could not Initiate Order"});
     }
 
@@ -142,9 +139,7 @@ const enrollStudents=async(courses, userID, res)=>{
                 `Successfully Enrolled into ${enrolledCourse.courseName}`,
                 courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName}`));
             
-            console.log(emailResponse.response);
         } catch (error) {
-            console.log(error);
             return res.status(500).json({success:false, message:error.message});
         }
     }
@@ -170,148 +165,6 @@ exports.sendPaymentSuccessfulMail=async(req,res)=>{
             amount/100,orderID, paymentID)
         )
     } catch(error) {
-        console.log("error in sending mail", error)
         return res.status(500).json({success:false, message:"Could not send email"})
     }
 }
-
-
-// exports.capturePayment=async(req,res)=>{
-//     try {
-//         const {courseID}=req.body;
-//         const userID=req.user.id;
-//         if(!courseID){
-//             return res.json({
-//                 success:false,
-//                 message:"Please provide valid courseID"
-//             })
-//         }
-
-//         var course;
-//         try {
-//             course=await Course.findById(courseID);
-//             if(!course){
-//                 return res.status(500).json({
-//                     success:false,
-//                     message:"Could not find the specified course"
-//                 })
-//             }
-
-//             const uid=new mongoose.Types.ObjectId(userID);
-//             if(course.studentsEnrolled.includes(uid)){
-//                 return res.status(200).json({
-//                     success:false,
-//                     message:"User is already enrolled in this course"
-//                 })
-//             }
-//         } catch (error) {
-//             console.log(error);
-//             return res.status(500).json({
-//                 success:false,
-//                 message:error.message
-//             })
-//         }
-
-//         const amount=course.price;
-//         const currency="INR";
-
-//         const options={
-//             amount:amount*100,
-//             currency,
-//             receipt:Math.random(Date.now()).toString(),
-//             notes:{
-//                 courseID:courseID,
-//                 userID:userID
-//             }
-//         }
-
-
-//         try {
-//             const paymentResponse=await instance.orders.create(options);
-//             console.log(paymentResponse);
-
-//             return res.status(200).json({
-//                 success:true,
-//                 courseName:course.title,
-//                 courseDescription:course.description,
-//                 thumbnail:course.thumbnail,
-//                 orderID:paymentResponse.id,
-//                 currency:paymentResponse.currency,
-//                 amount:paymentResponse.amount
-//             })
-//         } catch (error) {
-//             console.error(error);
-//             return res.status(500).json({
-//                 success:false,
-//                 message:"Could not initiate order"
-//             })
-//         }
-//     } catch (error) {
-        
-//     }
-    
-// }
-
-
-// exports.verifySignature=async(req,res)=>{
-    
-//         const webhookSecret="987654321";
-//         const signature=req.headers["x-razorpay-signature"];
-//         const shasum=crypto.createHmac("sha256",webhookSecret);
-//         const digest=shasum.digest("hex");
-
-//         if(signature=== digest){
-//             console.log("Payment is Authorized");
-
-//             try {
-//                 const {courseID,userID}=req.body.payload.payment.entity.notes;
-//                 const enrolledCourse=await Course.findByIdAndUpdate(
-//                 courseID,
-//                 {$push:{
-//                     studentsEnrolled:userID,
-//                 }},{new:true}
-//                 );
-//                 if(!enrolledCourse){
-//                     return res.status(404).json({
-//                         success:false,
-//                         message:"Course not found"
-//                     })
-//                 }
-
-//                 const enrolledStudent=await User.findByIdAndUpdate(userID,
-//                     {$push:{courses:courseID}},
-//                     {new:true});
-//                 if(!enrolledStudent){
-//                     return res.status(404).json({
-//                         success:false,
-//                         message:"Student can't be enrolled"
-//                     })
-//                 }
-                
-//                 const emailResponse=await mailSender(enrolledStudent.email,
-//                     "Congratulations from StudyNotion",
-//                     "Congratulations,you are successfully enrolled in the course");
-//                 console.log(emailResponse);
-
-//                 return res.status(200).json({
-//                     success:true,
-//                     message:"Student is successfully enrolled in the course",
-//                     data:emailResponse
-//                 })
-//             } catch (error) {
-//                 console.error(error);
-//                 return res.status(500).json({
-//                     sucess:false,
-//                     message:"Something went wrong while adding the subscription"
-//                 })
-//             }            
-
-//         }else{
-//             return res.status(400).json({
-//                 success:false,
-//                 message:"Invalid request"
-//             })
-//         }
-
-    
-// }

@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import logo from "../../assets/Logo/edu area.jpeg"
+import logo from "../../assets/Logo/website-logo.jpeg"
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import { NavbarLinks } from '../../data/navbar-links';
 import {IoIosArrowDown} from "react-icons/io"
@@ -13,7 +13,6 @@ import ProfileDropDown from '../Core/ProfileDropDown';
 
 const NavBar = () => {
     const {user}=useSelector((state)=>state.profile);
-    // const user=JSON.parse(localStorage.getItem("user"));
     const{totalItems}=useSelector((state)=>state.cart);
     const {token}=useSelector((state)=>state.auth);
 
@@ -28,7 +27,6 @@ const NavBar = () => {
         try {
             const result=await ApiConnector("GET",categories.CATEGORIES_API);
             setSubLinks(result.data.allCategorys);
-            // console.log("Printing sublinks...",subLinks);
         } catch (error) {
             console.log("Could not fetch sublinks...",error);
         }
@@ -39,13 +37,13 @@ const NavBar = () => {
     },[] )
 
   return (
-    <div className='w-full h-14 flex items-center justify-center border-b-[1px] border-richblack-700 text-white'>
+    <div className='w-full h-16 flex items-center justify-center border-b-[1px] border-richblack-700 text-white'>
       <div className='flex w-11/12 max-w-maxContent items-center justify-between'>
         <div className='flex items-center gap-3'>
             <Link to={"/"}>
-                <img src={logo} className='rounded-full aspect-square w-10' loading='lazy'/>
+                <img src={logo} className='rounded-full aspect-square w-10' loading='lazy' alt=''/>
             </Link>
-            <p className='text-richblack-5 text-xl font-semibold'>EDUArea</p>
+            <p className='text-richblack-5 text-xl font-semibold'>ScholarSpace</p>
         </div>
 
         <div>
@@ -63,7 +61,7 @@ const NavBar = () => {
                                     group-hover:visible top-9 -right-[51px] rounded-md transition-all duration-200 z-50'>
                                         <div className='w-6 h-6 rotate-45 absolute bg-richblack-5 -top-2 right-12  rounded-sm'></div>
 
-                                        <div className='text-richblack-800 flex flex-col p-2'>
+                                        <div className='text-richblack-800 flex flex-col p-2 mt-2'>
                                         {
                                             subLinks.length?
                                             (

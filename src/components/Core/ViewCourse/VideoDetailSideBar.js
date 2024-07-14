@@ -20,16 +20,15 @@ const VideoDetailSideBar = ({setReviewModal}) => {
 
 
     function courseValues(){
-    if(courseSectionData.length==0) return;
+    if(courseSectionData?.length===0) return;
 
-    const currentSectionIndex=courseSectionData.findIndex(
-        (data)=>data._id===sectionID
+    const currentSectionIndex=courseSectionData?.findIndex(
+        (data)=>data?._id===sectionID
     );
-    const currentSubSectionIndex=courseSectionData?.[currentSectionIndex]?.
-        subSection.findIndex((data)=>data._id ===subSectionID);
+    const currentSubSectionIndex=courseSectionData?.[currentSectionIndex]?.subSection.findIndex((data)=>data._id ===subSectionID);
     
     const activeSubSectionID=courseSectionData[currentSectionIndex]?.subSection?.
-        [currentSubSectionIndex]._id;
+        [currentSubSectionIndex]?._id;
     
     setActiveStatus(courseSectionData[currentSectionIndex]?._id);
     setVideoBarActive(activeSubSectionID);

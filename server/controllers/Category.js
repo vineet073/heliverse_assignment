@@ -19,8 +19,7 @@ exports.createCategory=async(req,res)=>{
             message:"Category created successfully"
         });
     } catch (error) {
-        console.error(error);
-        console.log(error.message)
+
         return res.status(500).json({
             success:false,
             message:"Something went wrong, please try again"
@@ -31,7 +30,9 @@ exports.createCategory=async(req,res)=>{
 
 exports.getAllCategorys=async(req,res)=>{
     try {
-        const allCategorys=await Category.find({},{title:true,description:true});
+        const allCategorys=await Category.find({},{title:true,description:true,course:true}).populate({
+            path: "course"
+        });
         return res.status(200).json({
             success:true,
             message:"All Categorys returned successfully",
@@ -67,8 +68,7 @@ exports.categoryPageDetails=async(req,res)=>{
             })
         };
 
-        if(selectedCategory.course.length==0){
-            console.log("No courses found for selected category");
+        if(selectedCategory.course.length===0){
             return res.status(404).json({
                 success:false,
                 message:"Courses not found for selected category"
@@ -80,11 +80,9 @@ exports.categoryPageDetails=async(req,res)=>{
             _id:{$ne:categoryID}
         });
         const index=getRandomInt(nonSelectedCategory.length);
-        // console.log("non-selected categories",nonSelectedCategory);
-        // console.log("non-selected categories length:",nonSelectedCategory.length);
 
         let differentCategory=await Category.findById(
-            nonSelectedCategory[index]._id
+            nonSelectedCategory[index]?._id
         ).populate({
             path:"course",
             match:{status:"Published"},
@@ -102,15 +100,13 @@ exports.categoryPageDetails=async(req,res)=>{
         const mostSellingCourses=allCourses
             .sort((a,b)=>b?.studentEnrolled?.length() - a?.studentEnrolled?.length())
             .slice(0,10);
-
-        // console.log("mostSellingCourses",mostSellingCourses)
         
         return res.status(200).json({
             success:true,
             data:{
             selectedCategory,
-            differentCategory,
-            mostSellingCourses
+            differentCategory: differentCategory ? differentCategory : null,
+            mostSellingCourses : mostSellingCourses ? mostSellingCourses : null
             }
         });
 

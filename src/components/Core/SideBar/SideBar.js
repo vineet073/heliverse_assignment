@@ -11,7 +11,6 @@ import { VscSignOut } from "react-icons/vsc"
 export default function SideBar()  {
     const{user,loading:profileLoading}=useSelector((state)=>state.profile);
     const{loading:authLoading}=useSelector((state)=>state.auth);
-    // const user=JSON.parse(localStorage.getItem("user"));
     const dispatch=useDispatch();
     const navigate=useNavigate();
     const [open, setOpen] = useState(false)
@@ -24,16 +23,15 @@ export default function SideBar()  {
 
 
   return (
-    <div className={`text-white bg-richblack-800 w-[14%] pt-12 border-r-2 border-richblack-700
-    `}>
+    <div className={`text-white bg-richblack-800 w-[15%] pt-12 border-r-2 border-richblack-700 overflow-hidden`}>
       <div>
         {
-            sidebarLinks.map((link)=>{
-                if(link.type && link.type!==user?.accountType) return null;
-                return(
-                    <SideBarLinks key={link.id} name={link.name} iconName={link.icon} path={link.path}/>
-                )
-            })
+          sidebarLinks.map((link)=>{
+              if(link.type && link.type!==user?.accountType) return null;
+              return(
+                  <SideBarLinks key={link.id} name={link.name} iconName={link.icon} path={link.path}/>
+              )
+          })
         }
       </div>
 
@@ -59,7 +57,7 @@ export default function SideBar()  {
                 btn1handler:()=>dispatch(logout(navigate)),
                 btn2handler:()=>setOpen(prevState=>!prevState)
               }}
-              />}
+      />}
     </div>
 
     

@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import { useState } from 'react'
 import { useDropzone } from 'react-dropzone';
-import { Player } from 'video-react';
 import { FiUploadCloud } from 'react-icons/fi';
 import ReactPlayer from 'react-player';
 
@@ -15,7 +14,8 @@ const Upload = ({
     setValue,
     video=false,
     viewData=null,
-    editData=null
+    editData=null,
+    pdf=false
 }) => {
 
     const[selectedFile,setSelectedFile]=useState(null);
@@ -32,10 +32,12 @@ const Upload = ({
         }
     }
 
-    const {getRootProps,getInputProps,isDragActive}=useDropzone({
-        accept: video?
-        {"video/*":[".mp4"]}
-        :{"image/*":[".jpeg",".jpg",".png"]},
+    const {getRootProps,getInputProps}=useDropzone({
+        accept: video
+            ? { 'video/*': ['.mp4'] }
+            : pdf
+            ? { 'application/pdf': ['.pdf'] }
+            : { 'image/*': ['.jpeg', '.jpg', '.png'] },
         onDrop
     });
 
@@ -43,15 +45,12 @@ const Upload = ({
         const reader=new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend=()=>{
-            // console.log(reader.result)
             setPreviewSource(reader.result);
         }
     }
 
-    // register(name,{required:true});
 
     useEffect(()=>{
-        // console.log(name);
         register(name,{required:true});
     },[register])
 
@@ -61,7 +60,7 @@ const Upload = ({
 
     return (
     <div>
-      <label htmlFor={name}>
+      <label htmlFor={name} className='text-richblack-25 text-sm'>
         {label} <sup className='text-pink-400'>*</sup>
       </label>
 
@@ -81,23 +80,17 @@ const Upload = ({
                         setValue(name,null)
                     }}>Cancel</button>
                 }
-            </div>)
-            
-            :(<div
+            </div>):
+            (<div
                className='flex flex-col items-center' {...getRootProps()}>
                 <input {...getInputProps()} ref={inputRef}/>
                 <div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
                 <FiUploadCloud className="text-2xl text-yellow-50" />
                  </div>
                 <p className="mt-2 max-w-[200px] text-center text-sm text-richblack-200">
-                Drag and drop here
-                
+                Drag and drop here                
                 </p>
-                <ul className="mt-10 flex list-disc justify-between space-x-12 text-center  text-xs text-richblack-200">
-                <li>Aspect ratio 16:9</li>
-                <li>Recommended size 1024x576</li>
-                </ul>
-               </div>)
+            </div>)
         }
       </div>
       {

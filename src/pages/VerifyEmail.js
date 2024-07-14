@@ -28,6 +28,7 @@ const VerifyEmail = () => {
         email,
         password,
         confirmPassword,
+        resume
         }=signupData
 
         dispatch(signUp(
@@ -38,6 +39,7 @@ const VerifyEmail = () => {
         password,
         confirmPassword,
         otp,
+        resume,
         navigate
         ));
 

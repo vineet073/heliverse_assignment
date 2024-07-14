@@ -20,9 +20,6 @@ exports.isAuthorized=async(req,res,next)=>{
             req.user=decode;
 
         } catch (error) {
-
-            console.log(error);
-            console.log(error.message);
             return res.status(401).json({
                 success:false,
                 message:"Failed to verify the authenticity of the user"
@@ -50,7 +47,6 @@ exports.isStudent=async(req,res,next)=>{
         }
         next();
     } catch (error) {
-        console.error(error);
         return res.status(500).json({
             success:false,
             message:error.message
@@ -69,7 +65,6 @@ exports.isInstructor=async(req,res,next)=>{
         }
         next();
     } catch (error) {
-        console.error(error);
         return res.status(500).json({
             success:false,
             message:error.message
@@ -88,7 +83,6 @@ exports.isAdmin=async(req,res,next)=>{
         }
         next();
     } catch (error) {
-        console.error(error);
         return res.status(500).json({
             success:false,
             message:error.message

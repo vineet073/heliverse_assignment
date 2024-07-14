@@ -1,10 +1,7 @@
-import React from 'react';
 import { endpoints } from '../Api';
 import { toast } from 'react-hot-toast';
 import ApiConnector from '../ApiConnector';
-import { useDispatch } from 'react-redux';
 import { setLoading, setToken } from '../../slices/authSlice';
-import {useNavigate } from 'react-router-dom';
 import { setUser } from '../../slices/profileSlice';
 import { resetCart } from '../../slices/cartSlice';
 
@@ -15,21 +12,18 @@ const {
     LOGIN_API,
     RESETPASSTOKEN_API,
     RESETPASSWORD_API,
-  } = endpoints
+    UPLOAD_API
+} = endpoints
 
 
 export function sendOTP(email,navigate){
     return async (dispatch)=>{
-        // const toastID=toast.loading(<div className='spinner'></div>);
         dispatch(setLoading(true));
 
         try {
             const response=await ApiConnector("POST",SENDOTP_API,{
                 email,
-                //checkUserPresent:true
             })
-            console.log("SEND OTP API RESPONSE....",response);
-            console.log(response.data);
 
             if(!response.data){
                 throw new Error(response.data.message)
@@ -39,16 +33,35 @@ export function sendOTP(email,navigate){
             navigate("/verify-email");
 
         } catch (error) {
-            console.log("SEND OTP Error...",error);
             toast.error("Could not send otp");
         }
 
         dispatch(setLoading(false));
-        // toast.dismiss(toastID);
     }
 
 }
 
+export async function uploadFile(resume){
+    const toastID=toast.loading("Loading...");
+    let result=null;
+    try {
+        const formData = new FormData();
+        formData.append("resume", resume); 
+
+        const response=await ApiConnector("POST",UPLOAD_API,formData,{
+            "Content-Type":"multipart/ form-data"
+        });
+        if(!response.data.success){
+            throw new Error("Error in uploading resume");
+        }
+        toast.success("Resume uploaded successfully");
+        result=response?.data?.data;
+    } catch (error) {
+        toast.error(error.message);
+    }
+    toast.dismiss(toastID);
+    return result;
+}
 
 export function signUp(
     accountType,
@@ -58,10 +71,10 @@ export function signUp(
     password,
     confirmPassword,
     otp,
+    resume,
     navigate
 ){
     return async (dispatch)=>{
-        // const toastID=toast.loading("Loading....");   
         dispatch(setLoading(true));     
 
         try {
@@ -72,10 +85,9 @@ export function signUp(
                 email,
                 password,
                 confirmPassword,
-                otp
+                otp,
+                resume
             })
-            console.log("SIGN UP API RESPONSE....",response);
-            console.log(response.data);
 
             if(!response.data){
                 throw new Error(response.data.message)
@@ -85,13 +97,10 @@ export function signUp(
             navigate("/login");
 
         } catch (error) {
-            console.log("Sign up error...",error);
             toast.error("Could not signup");
-            navigate("/singup")
+            navigate("/signup")
         }
-
         dispatch(setLoading(false));
-        // toast.dismiss(toastID);
     }
 }
 
@@ -101,17 +110,12 @@ export function login(
     password,navigate
 ){
     return async (dispatch)=>{
-        // const toastID=toast.loading("Loading....");
-        dispatch(setLoading(true));
-        
-
+        dispatch(setLoading(true));    
         try {
             const response=await ApiConnector("POST",LOGIN_API,{                
                 email,
                 password
             })
-            console.log("LOGIN API RESPONSE....",response);
-            console.log(response.data);
 
             if(!response.data){
                 throw new Error(response.data.message)
@@ -131,28 +135,22 @@ export function login(
             navigate("/dashboard/my-profile");
 
         } catch (error) {
-            console.log("Login error...",error);
             toast.error("Could not login");
             navigate("/login")
         }
-
         dispatch(setLoading(false));
-        // toast.dismiss(toastID);
     }
 }
 
 export function resetPasswordToken(email,setEmailSent){
     
     return async (dispatch)=>{
-        // const toastID=toast.loading("Loading....");
         dispatch(setLoading(true));
 
         try {
             const response=await ApiConnector("POST",RESETPASSTOKEN_API,{
                 email                
             })
-            console.log("Reset token API RESPONSE....",response);
-            console.log(response.data);
 
             if(!response.data){
                 throw new Error(response.data.message)
@@ -162,12 +160,10 @@ export function resetPasswordToken(email,setEmailSent){
             setEmailSent(true);
 
         } catch (error) {
-            console.log("SEND OTP Error...",error);
             toast.error("Could not send otp");
         }
 
         dispatch(setLoading(false));
-        // toast.dismiss(toastID);
     }
 
 }
@@ -176,10 +172,7 @@ export function resetPassword(password, confirmPassword, token) {
     return async(dispatch) => {
       dispatch(setLoading(true));
       try{
-        const response = await ApiConnector("POST", RESETPASSWORD_API, {password, confirmPassword, token});
-  
-        console.log("RESET Password RESPONSE ... ", response);
-  
+        const response = await ApiConnector("POST", RESETPASSWORD_API, {password, confirmPassword, token}); 
   
         if(!response.data.success) {
           throw new Error(response.data.message);
@@ -188,13 +181,11 @@ export function resetPassword(password, confirmPassword, token) {
         toast.success("Password has been reset successfully");
       }
       catch(error) {
-        console.log("RESET PASSWORD TOKEN Error", error);
         toast.error("Unable to reset password");
       }
       dispatch(setLoading(false));
     }
-  }
-
+}
 
 export function logout(navigate){
     return async(dispatch)=>{

@@ -8,7 +8,6 @@ import useOnClickOutside from '../../customHooks/useOnClickOutside';
 
 const ProfileDropDown = () => {
   const { user } = useSelector((state) => state.profile);
-  // const user=JSON.parse(localStorage.getItem("user"));
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)

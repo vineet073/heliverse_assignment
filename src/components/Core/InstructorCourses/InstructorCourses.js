@@ -8,8 +8,6 @@ import CourseTable from './CourseTable';
 
 const InstructorCourses = () => {
   const navigate=useNavigate();
-  const dispatch=useDispatch();
-  // const {course}=useSelector((state)=>state.course);
   const{token}=useSelector((state)=>state.auth);
   const[courses,setCourses]=useState([]);
 
@@ -17,7 +15,6 @@ const InstructorCourses = () => {
     const fetchCourses=async ()=>{
       const result =await fetchInstructorCourses(token);
       if(result){
-        // console.log(result);
         setCourses(result)
       }
     }

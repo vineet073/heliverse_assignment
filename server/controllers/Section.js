@@ -25,7 +25,6 @@ exports.createSection=async(req,res)=>{
                                     path:"subSection"
                                 }
             });
-        console.log(updatedCourse);
         res.status(200).json({
 			success: true,
 			message: "Section created successfully",
@@ -67,7 +66,6 @@ exports.updatedSection=async(req,res)=>{
         });
 
     } catch (error) {
-        console.error("Error while updating section",error);
         return res.status(500).json({
             success:false,
             message:"Internal server error"
@@ -94,7 +92,6 @@ exports.deleteSection=async(req,res)=>{
         });
 
     } catch (error) {
-        console.error("Error while updating section",error);
         return res.status(500).json({
             success:false,
             message:"Internal server error"

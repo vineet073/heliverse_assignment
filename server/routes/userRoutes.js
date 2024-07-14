@@ -7,7 +7,7 @@ const {
   login,
   signUP,
   sendOTP,
-  changePassword,
+  changePassword
 } = require("../controllers/authentication")
 
 const {
@@ -24,7 +24,7 @@ router.post("/login", login)
 router.post("/signup", signUP)
 // Route for sending OTP to the user's email
 router.post("/sendotp", sendOTP)
-// Route for Changing the password
+// Route for Changing the password  
 router.post("/changePassword", isAuthorized, changePassword)
 
 

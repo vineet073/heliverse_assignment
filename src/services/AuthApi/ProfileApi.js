@@ -21,7 +21,6 @@ export async function getUserEnrolledCourses(token){
       }
       result = response.data.data
     } catch (error) {
-      console.log("GET_USER_ENROLLED_COURSES_API API ERROR............", error)
       toast.error("Could Not Get Enrolled Courses")
     }
     toast.dismiss(toastId)
@@ -37,13 +36,61 @@ export async function getInstructorDashboard(token){
       "Authorization":`Bearer ${token}`
     });
 
-    console.log("GET_INSTRUCTOR_DATA_API API RESPONSE............", response)
     result = response?.data?.courses;
   } catch (error) {
-    console.log("GET INSTRUCTOR DASHOBARD API ERROR............", error)
     toast.error("Could Not Get Enrolled Courses")
   }
   toast.dismiss(toastID);
   return result
 }
   
+export async function getAllApprovedInstructorsData(token){
+  const toastID=toast.loading("Loading...");
+  try {
+    const response=await ApiConnector("GET",profileEndpoints.GET_ALL_APPROVED_INSTRUCTOR_DATA_API,null,
+    {
+      "Authorization":`Bearer ${token}`
+    });
+
+    return response;
+  } catch (error) {
+    toast.error("Could Not Get Instructor Data")
+  }finally{
+    toast.dismiss(toastID);
+  }
+
+}
+
+export async function getAllUnApprovedInstructorsData(token){
+  const toastID=toast.loading("Loading...");
+  try {
+    const response=await ApiConnector("GET",profileEndpoints.GET_ALL_UNAPPROVED_INSTRUCTOR_DATA_API,null,
+    {
+      "Authorization":`Bearer ${token}`
+    });
+
+    return response;
+  } catch (error) {
+    toast.error("Could Not Get Instructor Data")
+  }finally{
+    toast.dismiss(toastID);
+  }
+
+}
+
+export async function approveInstructors(checkedInstructors,token){
+  const toastID=toast.loading("Loading...");
+  try {
+    const response=await ApiConnector("POST",profileEndpoints.APPROVE_INSTRUCTORS_API,{checkedInstructors},
+    {
+      "Authorization":`Bearer ${token}`
+    });
+
+    return response;
+  } catch (error) {
+    toast.error("Could Not Get Instructor Data")
+  }finally{
+    toast.dismiss(toastID);
+  }
+
+}

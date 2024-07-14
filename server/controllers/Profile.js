@@ -5,6 +5,8 @@ const {cloudinaryUploader}=require('../configurations/cloudinaryUploader');
 const { default: mongoose } = require('mongoose');
 const { convertSecondsToDuration }=require('../configurations/convertSecondsToDuration');
 const CourseProgress=require('../models/CourseProgress');
+const mailSender = require('../configurations/mailSender');
+const accountApprovalTemplate = require('../templates/accountApprovalRes');
 
 
 exports.updateProfile=async(req,res)=>{
@@ -29,7 +31,6 @@ exports.updateProfile=async(req,res)=>{
         });
 
     } catch (error) {
-        console.log(error);
 		return res.status(500).json({
 			success: false,
 			error: error.message,
@@ -49,11 +50,6 @@ exports.deleteAccount=async(req,res)=>{
         }
 
         await Profile.findByIdAndDelete({_id:userDetails.additionalDetails});
-        // await Course.findByIdAndUpdate(
-        //     {_id:userDetails.courses},
-        //     {$pull:{
-        //         studentsEnrolled:new mongoose.Types.ObjectId(id),
-        //     }});
         await User.findByIdAndDelete({_id:id});
         
         return res.status(200).json({
@@ -62,7 +58,6 @@ exports.deleteAccount=async(req,res)=>{
         })
 
     } catch (error) {
-        console.log(error);
 		return res.status(500).json(
         { 
             success: false, 
@@ -77,7 +72,6 @@ exports.getAllUserDetails=async(req,res)=>{
         const id=req.user.id;
         const userDetails=await User.findById(id)
         .populate("additionalDetails").exec();
-        console.log(userDetails);
 
         res.status(200).json({
             success:true,
@@ -110,7 +104,6 @@ exports.updateDisplayPicture=async(req,res)=>{
         const updatedProfile=await User.findByIdAndUpdate(
             {_id:id},{image:imageUpload.secure_url},{new:true}
         ).populate("additionalDetails").exec();
-        console.log(updatedProfile);
         return res.send({
             success: true,
             message: `Image Updated successfully`,
@@ -147,17 +140,13 @@ exports.getEnrolledCourses = async (req, res) => {
         })
       }
 
-      // console.log("course id", userDetails.courses[0]._id);
-      // console.log("user id:",userID);
-
       userDetails = userDetails.toObject()
       var SubsectionLength = 0
       for (var i = 0; i < userDetails.courses.length; i++) {
         let totalDurationInSeconds = 0
         SubsectionLength = 0
         for (var j = 0; j < userDetails.courses[i].courseContent.length; j++) {
-          totalDurationInSeconds += userDetails.courses[i].courseContent[j].
-          subSection.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0);
+          totalDurationInSeconds += userDetails.courses[i].courseContent[j].subSection.reduce((acc, curr) => acc + parseInt(curr.timeDuration), 0);
   
           userDetails.courses[i].totalDuration = convertSecondsToDuration(
             totalDurationInSeconds);
@@ -171,8 +160,6 @@ exports.getEnrolledCourses = async (req, res) => {
             userID: userID,}
         );
           
-        // console.log("courseProgress:",courseProgress);
-
         let courseProgressCount = courseProgress?.completedVideos?.length;
         if (SubsectionLength === 0) {
           userDetails.courses[i].progressPercentage = 100
@@ -184,8 +171,6 @@ exports.getEnrolledCourses = async (req, res) => {
             ) / multiplier
         }
       }
-
-    //   console.log("userDetails:",userDetails);
       
       return res.status(200).json({
         success: true,
@@ -228,5 +213,87 @@ exports.instructorDashboard=async(req,res)=>{
       success: false,
       message: error.message,
     })
+  }
+}
+
+exports.getAllApprovedInstructorDetails=async(req,res)=>{
+  try {
+      const userDetails=await User.find({accountType:"Instructor", isVerified:true})
+      .populate({
+        path:"courses",
+        populate:{
+          path:"category",
+        }
+      }).exec();
+
+      res.status(200).json({
+          success:true,
+          message:"Instructors Details fetched successfully",
+          data:userDetails,
+      })
+
+  } catch (error) {
+      return res.status(500).json({
+          success:false,
+          message:error.message
+      })
+  }
+}
+
+exports.getAllUnApprovedInstructorDetails=async(req,res)=>{
+  try {
+    const userDetails=await User.find({accountType:"Instructor", isVerified:false})
+
+      res.status(200).json({
+          success:true,
+          message:"Instructors Details fetched successfully",
+          data:userDetails,
+      })
+
+  } catch (error) {
+      return res.status(500).json({
+          success:false,
+          message:error.message
+      })
+  }
+}
+
+exports.approveInstructors=async(req,res)=>{
+  try {
+    const {checkedInstructors}=req.body;
+    const response=await User.updateMany({_id:{$in:checkedInstructors}},{isVerified:true},{new:true});
+    
+    if(!response){
+      return res.status(400).json({
+        success:false,
+        message:"Could not approve the instructors"
+      })
+    }
+
+    const approvedInstructors = await User.find({_id: {$in: checkedInstructors}});
+
+    for (let instructor of approvedInstructors) {
+      const email = instructor.email;
+
+      const mailResponse = await mailSender(email,
+        "Account Approved Successfully",
+        accountApprovalTemplate({
+          firstName: instructor.firstName,
+          lastName: instructor.lastName,
+          email: instructor.email,
+        })
+      );
+    }  
+
+    return res.status(200).json({
+      success:true,
+      message:"Instructors approved successfully"
+    })
+
+  } catch (error) {
+      return res.status(500).json({
+          success:false,
+          message:error.message
+      })
   }
 }

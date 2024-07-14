@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {useForm} from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import IconBtn from '../../Common/IconBtn';
 import { updatePassword } from '../../../services/AuthApi/SettingApi';
@@ -8,7 +8,6 @@ import {AiOutlineEyeInvisible,AiOutlineEye} from 'react-icons/ai'
 
 const ChangePassword = () => {
   const {token}=useSelector((state)=>state.auth);
-  const dispatch=useDispatch();
   const navigate=useNavigate();
   const [showPassword,setShowPassword]=useState(false);
   const [newPassword,setNewPassword]=useState(false);
@@ -21,11 +20,10 @@ const ChangePassword = () => {
   }=useForm();
 
   const onSubmitHandler = async (data) => {
-    // console.log("Form Data - ", data)
     try {
       await (updatePassword(token, data))
     } catch (error) {
-      console.log("ERROR MESSAGE - ", error.message)
+      throw new Error(error)
     }
   }
   return (

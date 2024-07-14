@@ -1,8 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const CourseProgress=require('../models/CourseProgress');
-const Section=require('../models/Section')
 const SubSection=require('../models/SubSection');
-const Course=require('../models/Course');
 
 
 exports.updateCourseProgress=async(req,res)=>{
@@ -29,7 +27,7 @@ exports.updateCourseProgress=async(req,res)=>{
                 message:"Course Progress doesn't exist"
             })
         }else{
-            if(courseProgress.completedVideos.includes(subSectionID)){
+            if(courseProgress.completedVideos?.includes(subSectionID)){
                 return res.status(400).json({ error: "Subsection already completed" })
             }else{
                 courseProgress.completedVideos.push(subSectionID);

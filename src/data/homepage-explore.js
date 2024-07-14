@@ -1,116 +1,93 @@
 export const HomePageExplore = [
     {
-        tag: 'Free',
+        tag: 'Engineering Physics',
         courses : [
             {
-                heading : "Learn HTML",
-                description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Semiconductor Devices",
+                description : "An in-depth study of the physical properties of semiconductors, including their electronic structure, charge carriers, and the principles behind semiconductor devices such as diodes and transistors.",
+                level : 'Intermediate',
+                lessionNumber : 32
             },
             {
-                heading : "Learn CSS",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Electromagnetics",
+                description : "Covers the fundamental principles of electromagnetism, including electric and magnetic fields, Maxwell's equations, and their applications in engineering and technology.",
+                level : 'Intermediate',
+                lessionNumber : 34
             },
             {
-                heading : "Responsive Web design",
-                description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Quantum Mechanics",
+                description : "Explores the principles of quantum mechanics, including wave functions, uncertainty principles, and quantum states, with applications to physical systems.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
         ]
     },
     {
-        tag: 'New to coding',
+        tag: 'Engineering Maths',
         courses : [
             {
-                heading : "HTML",
-                description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Probability & Statistics",
+                description : "Provides a comprehensive overview of probability theory and statistical methods, including probability distributions, hypothesis testing, and data analysis techniques.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
             {
-                heading : "CSS",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Discrete Mathematics",
+                description : "Introduces the fundamental concepts of discrete mathematics, including logic, set theory, combinatorics, graph theory, and algorithms.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
             {
-                heading : "Responsive ",
-                description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Graph Theory",
+                description : "Covers the basic concepts and applications of graph theory, including graph structures, graph algorithms, and their relevance in computer science and engineering.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
         ]
     },
     {
-        tag: 'Most popular',
+        tag: 'Coding',
         courses : [
             {
-                heading : "Java",
-                description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "C & C++ Programming",
+                description : "An introduction to C and C++ programming languages, focusing on syntax, control structures, functions, arrays, pointers, and object-oriented programming concepts.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
             {
-                heading : "Python",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Data Structures Basics",
+                description : "Covers the fundamental concepts of data structures, including arrays, linked lists, stacks, queues, trees, and graphs, with an emphasis on their implementation and applications.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
             {
-                heading : "SCSS",
-                description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "OOPS Concepts",
+                description : "Explores the principles of Object-Oriented Programming (OOP), including classes, objects, inheritance, polymorphism, encapsulation, and abstraction, with examples in C++.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
         ]
     },
     {
-        tag: 'Skills paths',
+        tag: 'Core Subjects',
         courses : [
             {
-                heading : "Flask",
-                description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Operating Systems",
+                description : "An in-depth study of operating system principles, including process management, memory management, file systems, and the role of operating systems in computing.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
             {
-                heading : "Django",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Computer Networks",
+                description : "Covers the fundamental concepts of computer networking, including network architecture, protocols, data transmission, and network security.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
             {
-                heading : "Fast API",
-                description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-                level : 'Beginner',
-                lessionNumber : 6
-            },
-        ]
-    },
-    {
-        tag: 'Career paths',
-        courses : [
-            {
-                heading : "Next.js",
-                description : "This course covers the basic concepts of HTML including creating and structuring web pages, adding text, links, images, and more.",
-                level : 'Beginner',
-                lessionNumber : 6
-            },
-            {
-                heading : "Nuxt.js",
-                description : "This course explores advanced topics in HTML5 and CSS3, including animations, transitions, and layout techniques",
-                level : 'Beginner',
-                lessionNumber : 6
-            },
-            {
-                heading : "Sanity",
-                description : "This course teaches responsive web design techniques, allowing web pages to adapt to different devices and screen sizes",
-                level : 'Beginner',
-                lessionNumber : 6
+                heading : "Database Management Systems",
+                description : "Provides an overview of database management systems, including database design, SQL, normalization, transactions, and the role of databases in applications.",
+                level : 'Intermediate',
+                lessionNumber : 33
             },
         ]
     },

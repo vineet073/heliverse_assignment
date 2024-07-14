@@ -21,22 +21,6 @@ const ViewCourse = () => {
         }
     })
 
-    // async function viewCourseDetails(){
-    //     const courseData=await fetchFullCourseDetails(courseID,token);
-    //     console.log("course data:",courseData);
-    //     dispatch(setCourseSectionData(courseData?.courseDetails?.courseContent));
-    //     dispatch(setCourseEntireData(courseData?.courseDetails));
-    //     dispatch(setCompletedLectures(courseData?.completedVideos));
-
-    //     let lectures=0;
-    //     courseData?.courseDetails?.courseContent?.forEach((sec)=>{
-    //         lectures+=sec.subSection.length;
-    //     })
-
-    //     dispatch(setTotalNoOfLectures(lectures));
-    //     console.log("completed lectures:",courseData?.completedVideos);
-    // }
-
     useEffect(()=>{
         mutation.mutate();
     },[]);
@@ -47,7 +31,6 @@ const ViewCourse = () => {
 
     if(mutation.isSuccess){
         const courseData=mutation.data;
-        console.log("completed lectures:",courseData);
 
         dispatch(setCourseSectionData(courseData?.courseDetails?.courseContent));
         dispatch(setCourseEntireData(courseData?.courseDetails));
@@ -60,9 +43,6 @@ const ViewCourse = () => {
 
         dispatch(setTotalNoOfLectures(lectures));
     }
-
-
-
 
   return (
     <div>

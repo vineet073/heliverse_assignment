@@ -20,7 +20,6 @@ const CourseReviewSlider = () => {
 
         setReviews(res?.data?.data)
     }
-    console.log("review",reviews);
 
     useEffect(()=>{
         getRating();
@@ -50,7 +49,7 @@ const CourseReviewSlider = () => {
                                     data?.user?.image ?
                                     data.user.image : 
                                     `https://api.dicebear.com/5.x/initials/svg?seed=${data?.user?.firstName} ${data?.user?.lastName}`
-                                } className='rounded-full aspect-square w-12'/>
+                                } className='rounded-full aspect-square w-12' alt=''/>
 
                                 <div>
                                     <p>{data?.user?.firstName}  {data?.user?.lastName}</p>

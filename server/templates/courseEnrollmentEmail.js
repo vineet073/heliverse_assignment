@@ -67,8 +67,7 @@ exports.courseEnrollmentEmail = (courseName, name) => {
     
     <body>
         <div class="container">
-        <a href="https://studynotion-edtech-project.vercel.app">
-        EDUArea</a>
+        <a href="https://studynotion-edtech-project.vercel.app">ScholarSpace</a>
             <div class="message">Course Registration Confirmation</div>
             <div class="body">
                 <p>Dear ${name},</p>

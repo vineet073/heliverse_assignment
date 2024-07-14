@@ -30,10 +30,9 @@ const CourseDetails = () => {
       setActiveStatus(courseData?.courseContent[0]._id);
     }
     catch(error) {
-        console.log("Could not fetch coursse details");
+      throw new Error("Could not fetch course details");
     }
   }
-  console.log("section details:",activeStatus);
 
   useEffect(()=> {      
       getCourseFullDetails();  
@@ -114,7 +113,7 @@ const CourseDetails = () => {
 
         <div className='bg-richblack-800 relative pl-36 mb-14 pt-20 pb-20'>
           <h1 className='text-3xl font-semibold'>{courseName}</h1>
-          <h3 className='my-3 text-richblack-300'>{courseDescription}</h3>
+          <h3 className='my-3 text-richblack-300 w-[60%]'>{courseDescription}</h3>
 
           <div className='flex gap-1 my-3 text-lg items-center'>
             <p>{avgReviewCount}</p>

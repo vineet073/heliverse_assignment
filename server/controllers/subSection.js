@@ -29,7 +29,6 @@ exports.createSubSection=async(req,res)=>{
             }},{new:true}).populate("subSection").exec();
 
         const updatedSection=await Section.findById(sectionID).populate("subSection").exec();
-        console.log(updatedSection);
 
         return res.status(200).json({
             success:true,
@@ -38,7 +37,6 @@ exports.createSubSection=async(req,res)=>{
         })
 
     } catch (error) {
-        console.error("Error creating new sub-section:", error);
 		return res.status(500).json({
 			success: false,
 			message: "Internal server error",
@@ -63,12 +61,10 @@ exports.updateSubSection=async(req,res)=>{
         }
 
         if (title !== undefined) {
-            console.log(title);
             subSection.title = title;
         }
       
         if (description !== undefined) {
-            console.log(description);
             subSection.description = description;
         }
 
@@ -81,14 +77,12 @@ exports.updateSubSection=async(req,res)=>{
 
         await subSection.save();
         const updatedSection=await Section.findById(sectionID).populate("subSection");
-        console.log(updatedSection);
         res.status(200).json({
             success:true,
             updatedSection
         });
 
     } catch (error) {
-        console.error("Error while updating sub-section",error);
         return res.status(500).json({
             success:false,
             message:"Internal server error"
@@ -102,7 +96,6 @@ exports.deleteSubSection=async(req,res)=>{
         const {subSectionID,sectionID}=req.body;
         const subSection=await SubSection.findByIdAndDelete(subSectionID);
         const updatedSection=await Section.findById(sectionID).populate("subSection");
-        console.log(updatedSection)
         res.status(200).json({
             success:true,
             message:"Sub-Section deleted",
@@ -110,7 +103,6 @@ exports.deleteSubSection=async(req,res)=>{
         });
 
     } catch (error) {
-        console.error("Error while deleting sub-section",error);
         return res.status(500).json({
             success:false,
             message:"Internal server error"

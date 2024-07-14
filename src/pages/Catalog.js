@@ -6,6 +6,7 @@ import { fetchCatalogPageData } from '../services/AuthApi/CourseApi';
 import CourseSlider from '../components/Common/CourseSlider';
 import CourseCard from '../components/Common/CourseCard';
 import Footer from '../components/Common/Footer';
+import toast from 'react-hot-toast';
 
 const Catalog = () => {
     const {catalogName}=useParams();
@@ -14,10 +15,9 @@ const Catalog = () => {
 
     async function getCategories(){
         try {
-        var res =await ApiConnector("GET",categories.CATEGORIES_API);
-        console.log(res);
+          var res =await ApiConnector("GET",categories.CATEGORIES_API);
         } catch (error) {
-            console.log(error);
+          toast.error("Could Not Get Categories")  
         }
         const categoryID=res?.data?.allCategorys?.filter((ct)=>ct.title.split(" ").join("-").toLowerCase()===catalogName)[0]._id;
         setCategoryID(categoryID);
@@ -31,9 +31,8 @@ const Catalog = () => {
             try {
                 const result=await fetchCatalogPageData(categoryID);
                 setCatalogPageData(result);
-                // console.log("CAtalog page data",result.differentCategory.course);
             } catch (error) {
-                console.log(error);
+              throw new Error("Could not fetch catalog page data")
             }
         }
 
@@ -82,10 +81,7 @@ const Catalog = () => {
               return <CourseCard course={course} key={index} Height={"h-[400px]"}/>
             })
         }
-        </div>
-        
-        
-        
+        </div>             
       </div>
 
       <Footer/>

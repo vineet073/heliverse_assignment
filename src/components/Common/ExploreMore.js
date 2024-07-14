@@ -5,11 +5,10 @@ import { HomePageExplore } from '../../data/homepage-explore';
 
 
 const tabsName = [
-    "Free",
-    "New to coding",
-    "Most popular",
-    "Skill paths",
-    "Career paths",
+    "Engineering Physics",
+    "Engineering Maths",
+    "Coding",
+    "Core Subjects",
 ];
 
 
@@ -29,7 +28,7 @@ export const ExploreMore = () => {
 
   return (
     <div className='flex flex-col items-center z-10'>
-        <div className='text-4xl font-semibold'>Unlock the <HighlighText text={'Power of Code'}/></div>
+        <div className='text-4xl font-semibold'>Unlock the <HighlighText text={'Power of Learning'}/></div>
         <div className='text-center text-sm text-richblack-200 mt-4'>Learn to build anything you can imagine</div>
         <div className='flex flex-row bg-richblack-800 p-1 rounded-full gap-4 mt-6'>
             {
@@ -50,15 +49,21 @@ export const ExploreMore = () => {
                 courses.map((element,index)=>{
                     return(
                         <div key={index} onClick={()=>setCards(element)}
-                        className={`w-[280px] flex flex-col px-4 pt-4 pb-2 bg-white text-richblack-300
+                        className={`w-[280px] h-[280px] flex flex-col justify-between px-4 pt-4 pb-2 bg-white text-richblack-300
                         ${courses===element?"drop-shadow-xl shadow-yellow-700":"shadow-white"}`}>
-                            <div className='text-richblack-900 font-semibold text-lg'>{element.heading}</div>
-                            <div className='text-sm text-justify'>{element.description}</div>
-                            <div className='border-dashed border mt-14 mb-1'></div>
-                            <div className='flex flex-row justify-between'>
-                                <div className='text-blue-300 font-semibold'>{element.level}</div>
-                                <div className='text-blue-300 font-semibold'>{element.lessionNumber} Lessons</div>
+                            <div>
+                                <div className='text-richblack-900 font-semibold text-lg'>{element.heading}</div>
+                                <div className='text-sm text-justify'>{element.description}</div>
                             </div>
+
+                            <div>
+                                <div className='border-dashed border mt-14 mb-1'></div>
+                                <div className='flex flex-row justify-between'>
+                                    <div className='text-blue-300 font-semibold'>{element.level}</div>
+                                    <div className='text-blue-300 font-semibold'>{element.lessionNumber} Lessons</div>
+                                </div>
+                            </div>
+
                         </div>
                     )
                 })

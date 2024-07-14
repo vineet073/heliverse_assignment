@@ -7,53 +7,12 @@ import { fetchCourseDetails } from '../../../services/AuthApi/CourseApi';
 import { setCourse, setEditCourse } from '../../../slices/courseSlice';
 import RenderSteps from '../AddCourse/RenderSteps';
 
-// const EditCourse = () => {
-//     const dispatch=useDispatch();
-//     const {courseID}=useParams();
-//     const[loading,setLoading]=useState();
-//     const{token}=useSelector((state)=>state.auth);
-//     const {course}=useSelector((state)=>state.course);
-
-//     useEffect(()=>{
-//         const getCourses=async()=>{
-//             setLoading(true);
-//             const result= await fetchCourseDetails(courseID,token);
-//             if(result){
-//                 console.log("edit coures:",result);
-//                 dispatch(setEditCourse(true));
-//                 dispatch(setCourse(result));
-//             }
-//             setLoading(false);
-//         }
-//         getCourses();
-//     },[])
-
-//   return (
-//     <div>
-//       <h1 className="mb-14 text-3xl font-medium text-richblack-5">
-//         Edit Course
-//       </h1>
-//       <div className="mx-auto max-w-[600px]">
-//         {course ? (
-//           <RenderSteps />
-//         ) : (
-//           <p className="mt-14 text-center text-3xl font-semibold text-richblack-100">
-//             Course not found
-//           </p>
-//         )}
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default EditCourse
 
 export default function EditCourse() {
   const dispatch = useDispatch()
   const { courseID } = useParams()
   const { course } = useSelector((state) => state.course)
   const [loading, setLoading] = useState(false)
-  const { token } = useSelector((state) => state.auth)
 
   useEffect(() => {;(async () => {
       setLoading(true)
