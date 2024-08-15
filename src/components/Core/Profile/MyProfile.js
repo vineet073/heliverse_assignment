@@ -6,6 +6,7 @@ import { RiEditBoxLine } from "react-icons/ri"
 
 const MyProfile = () => {
   const {user}=useSelector((state)=>state.profile);
+  console.log(user);
   const navigate=useNavigate();
 
   return (
@@ -19,19 +20,9 @@ const MyProfile = () => {
           </div>
 
           <div>
-            <h1 className='text-richblack-5 mb-2'>{user?.firstName} {user?.lastName}</h1>
+            <h1 className='text-richblack-5 mb-2'>{user?.Name || user?.userName}</h1>
             <p className='text-sm'>{user?.email}</p>
           </div>
-        </div>
-
-        <div>
-          <IconBtn
-          onClick={()=>navigate("/dashboard/settings")}
-          text={"Edit"}
-          active={true}
-          customClasses={"flex gap-2 items-center font-semibold"}
-          ><RiEditBoxLine/>
-          </IconBtn>
         </div>
       </div>
 
@@ -41,19 +32,16 @@ const MyProfile = () => {
 
           <div>
             <h1 className='text-richblack-5 text-xl font-medium mb-2'>About</h1>
-            <p className='text-sm'>{user?.additionalDetails?.about ? user.additionalDetails.about:"Write something about yourself"}</p>
+            <p className='text-sm'>
+              {user?.accountType === "Admin" 
+                ? "Principal" 
+                : user?.accountType === "Instructor" 
+                ? "Teacher" 
+                : "Student"}
+            </p>
           </div>
         </div>
 
-        <div>
-          <IconBtn
-          onClick={()=>navigate("/dashboard/settings")}
-          text={"Edit"}
-          active={true}
-          customClasses={"flex gap-2 items-center font-semibold"}
-          ><RiEditBoxLine/>
-          </IconBtn>
-        </div>
       </div>
 
       <div className='flex justify-between bg-richblack-800 p-9 rounded-md border-[1px] border-richblack-600'>
@@ -64,15 +52,11 @@ const MyProfile = () => {
 
           <div className='grid grid-cols-2 gap-x-40'>
             <div>
-              <h1 className='text-sm'>First Name</h1>
-              <p className='text-richblack-5 text-sm font-medium mt-2 mb-4'>{user?.firstName}</p>
+              <h1 className='text-sm'>Name</h1>
+              <p className='text-richblack-5 text-sm font-medium mt-2 mb-4'>{user?.Name || user?.userName}</p>
             </div>
 
-            <div>
-              <h1 className='text-sm'>Last Name</h1>
-              <p className='text-richblack-5 text-sm font-medium mt-2 mb-4'>{user?.lastName}</p>
-            </div>
-
+            
             <div>
               <h1 className='text-sm'>Email</h1>
               <p className='text-richblack-5 text-sm font-medium mt-2 mb-4'>{user?.email}</p>
@@ -98,11 +82,10 @@ const MyProfile = () => {
 
         <div>
           <IconBtn
-          onClick={()=>navigate("/dashboard/settings")}
           text={"Edit"}
           active={true}
-          customClasses={"flex gap-2 items-center font-semibold"}
-          ><RiEditBoxLine/>
+          customClasses={"flex gap-2 items-center font-semibold"}>
+            <RiEditBoxLine/>
           </IconBtn>
         </div>
       </div>

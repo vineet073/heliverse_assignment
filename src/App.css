@@ -5,9 +5,7 @@ html,body{
    box-shadow: 1px 1.3px #838894;
    
 }
-.bgHome{
-    background-image: url('./assets/Images/bghome.svg');
-}
+
 
 .spinner {
    width: 56px;

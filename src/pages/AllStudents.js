@@ -6,22 +6,22 @@ import AddUsers from "../components/Core/AddUsers";
 const tabData = [
   {
     id: 1,
-    tabName: "Instructors",
+    tabName: "Students",
   },
   {
     id: 2,
-    tabName: "Add Instructor",
+    tabName: "Add Students",
   }
 ]
 
-function AllInstructors() {
+function AllStudents() {
   const [field, setField] = useState(tabData[0].tabName);
 
   return (
     <div>
       <Tab tabData={tabData} field={field} setField={setField} />
       {
-        field === "Instructors" ? (
+        field === "Students" ? (
           <UserList setField={setField} tabData={tabData}/>
         ) : (
           <AddUsers/>
@@ -31,4 +31,4 @@ function AllInstructors() {
   );
 }
 
-export default AllInstructors
+export default AllStudents

@@ -1,50 +1,26 @@
 import toast from "react-hot-toast";
 import ApiConnector from "../ApiConnector";
-import { profileEndpoints } from "../Api";
+import { profileEndpoints} from "../Api";
 
 
-export async function getUserEnrolledCourses(token){
-    const toastId = toast.loading("Loading...")
-    let result = []
-    try {
-      const response = await ApiConnector(
-        "GET",
-        profileEndpoints.GET_USER_ENROLLED_COURSES_API,
-        null,
-        {
-          Authorization: `Bearer ${token}`,
-        }
-      )
-  
-      if (!response.data.success) {
-        throw new Error(response.data.message)
-      }
-      result = response.data.data
-    } catch (error) {
-      toast.error("Could Not Get Enrolled Courses")
-    }
-    toast.dismiss(toastId)
-    return result
-}
-
-export async function getInstructorDashboard(token){
+export async function getStudentsByClassroom(classroom,token){
   const toastID=toast.loading("Loading...");
   let result=[];
   try {
-    const response=await ApiConnector("GET",profileEndpoints.GET_INSTRUCTOR_DATA_API,null,
+    const response=await ApiConnector("POST",profileEndpoints.GET_INSTRUCTOR_DATA_API,{classroom},
     {
       "Authorization":`Bearer ${token}`
     });
 
-    result = response?.data?.courses;
+    result = response;
   } catch (error) {
-    toast.error("Could Not Get Enrolled Courses")
+    toast.error("Could Not Get Student Data")
   }
   toast.dismiss(toastID);
   return result
 }
   
-export async function getAllApprovedInstructorsData(token){
+export async function getInstructors(token){
   const toastID=toast.loading("Loading...");
   try {
     const response=await ApiConnector("GET",profileEndpoints.GET_ALL_APPROVED_INSTRUCTOR_DATA_API,null,
@@ -61,7 +37,7 @@ export async function getAllApprovedInstructorsData(token){
 
 }
 
-export async function getAllUnApprovedInstructorsData(token){
+export async function getStudents(token){
   const toastID=toast.loading("Loading...");
   try {
     const response=await ApiConnector("GET",profileEndpoints.GET_ALL_UNAPPROVED_INSTRUCTOR_DATA_API,null,
@@ -78,15 +54,15 @@ export async function getAllUnApprovedInstructorsData(token){
 
 }
 
-export async function approveInstructors(checkedInstructors,token){
+export async function getInstructorDetailsbyId(id,token){
   const toastID=toast.loading("Loading...");
   try {
-    const response=await ApiConnector("POST",profileEndpoints.APPROVE_INSTRUCTORS_API,{checkedInstructors},
+    const response=await ApiConnector("POST",profileEndpoints.APPROVE_INSTRUCTORS_API,{id},
     {
       "Authorization":`Bearer ${token}`
     });
 
-    return response;
+    return response.data.instructorDetails;
   } catch (error) {
     toast.error("Could Not Get Instructor Data")
   }finally{

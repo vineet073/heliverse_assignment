@@ -3,104 +3,44 @@ import { toast } from 'react-hot-toast';
 import ApiConnector from '../ApiConnector';
 import { setLoading, setToken } from '../../slices/authSlice';
 import { setUser } from '../../slices/profileSlice';
-import { resetCart } from '../../slices/cartSlice';
+
 
 
 const {
-    SENDOTP_API,
     SIGNUP_API,
     LOGIN_API,
     RESETPASSTOKEN_API,
     RESETPASSWORD_API,
-    UPLOAD_API
 } = endpoints
 
 
-export function sendOTP(email,navigate){
-    return async (dispatch)=>{
-        dispatch(setLoading(true));
 
-        try {
-            const response=await ApiConnector("POST",SENDOTP_API,{
-                email,
-            })
-
-            if(!response.data){
-                throw new Error(response.data.message)
-            }
-
-            toast.success("OTP sent successfully");
-            navigate("/verify-email");
-
-        } catch (error) {
-            toast.error("Could not send otp");
-        }
-
-        dispatch(setLoading(false));
-    }
-
-}
-
-export async function uploadFile(resume){
-    const toastID=toast.loading("Loading...");
-    let result=null;
-    try {
-        const formData = new FormData();
-        formData.append("resume", resume); 
-
-        const response=await ApiConnector("POST",UPLOAD_API,formData,{
-            "Content-Type":"multipart/ form-data"
-        });
-        if(!response.data.success){
-            throw new Error("Error in uploading resume");
-        }
-        toast.success("Resume uploaded successfully");
-        result=response?.data?.data;
-    } catch (error) {
-        toast.error(error.message);
-    }
-    toast.dismiss(toastID);
-    return result;
-}
-
-export function signUp(
-    accountType,
-    firstName,
-    lastName,
+export async function signUp(
+    userName,
     email,
     password,
     confirmPassword,
-    otp,
-    resume,
-    navigate
+    accountType,
+    classroom
 ){
-    return async (dispatch)=>{
-        dispatch(setLoading(true));     
+    try {
+        const response=await ApiConnector("POST",SIGNUP_API,{
+            userName,
+            email,
+            password,
+            confirmPassword,
+            accountType,
+            classroom
+        })
 
-        try {
-            const response=await ApiConnector("POST",SIGNUP_API,{
-                accountType,
-                firstName,
-                lastName,
-                email,
-                password,
-                confirmPassword,
-                otp,
-                resume
-            })
-
-            if(!response.data){
-                throw new Error(response.data.message)
-            }
-
-            toast.success("Signup successfully");
-            navigate("/login");
-
-        } catch (error) {
-            toast.error("Could not signup");
-            navigate("/signup")
+        if(!response.data){
+            throw new Error(response.data.message)
         }
-        dispatch(setLoading(false));
+
+        toast.success("Signup successfully");
+
+    } catch (error) {
+        toast.error("Could not signup");
     }
 }
 
@@ -192,7 +132,6 @@ export function logout(navigate){
         dispatch(setLoading(true));
         dispatch(setToken(null));
         dispatch(setUser(null));
-        dispatch(resetCart());
 
         localStorage.removeItem("token");
         localStorage.removeItem("user");

@@ -1,27 +1,25 @@
 const express = require("express");
 const router = express.Router();
-const { isAuthorized,isStudent, isInstructor, isAdmin } = require("../middlewares/authorization");
+const { isAuthorized, isAdmin, isInstructor } = require("../middlewares/authorization");
 
 const {
-  deleteAccount,
-  updateProfile,
-  getAllUserDetails,
-  getEnrolledCourses,
-  updateDisplayPicture,
-  instructorDashboard,
-  getAllApprovedInstructorDetails,
-  getAllUnApprovedInstructorDetails,
-  approveInstructors
+updateProfile,
+deleteAccount,
+getAllApprovedInstructorDetails,
+getAllUnApprovedInstructorDetails,
+getAllUserDetails,
+approveInstructors,
+getStudentByClassroom
 } = require("../controllers/Profile");
+const { uploadFile } = require("../controllers/UploadFile");
 
-router.delete("/deleteProfile", isAuthorized, deleteAccount)
+router.put("/deleteProfile", isAuthorized, deleteAccount)
 router.put("/updateProfile", isAuthorized, updateProfile)
 router.get("/getUserDetails", isAuthorized, getAllUserDetails)
-router.get("/getEnrolledCourses", isAuthorized,isStudent, getEnrolledCourses)
-router.put("/updateDisplayPicture", isAuthorized, updateDisplayPicture)
-router.get("/instructorDashboard", isAuthorized, isInstructor, instructorDashboard)
 router.get("/getAllAprovedInstructorData", isAuthorized, isAdmin, getAllApprovedInstructorDetails)
-router.get("/getAllUnApprovedInstructorData", isAuthorized, isAdmin, getAllUnApprovedInstructorDetails)
-router.post('/approveInstructors', isAuthorized, isAdmin, approveInstructors)
+router.get("/getAllUnApprovedInstructorData", isAuthorized, getAllUnApprovedInstructorDetails)
+router.post("/instructorDashboard",isAuthorized,getStudentByClassroom)
+router.post('/approveInstructors', isAuthorized, approveInstructors)
+router.post("/uploadFile",isAuthorized,uploadFile);
 
 module.exports = router

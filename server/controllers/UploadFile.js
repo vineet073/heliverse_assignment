@@ -1,14 +1,24 @@
 const { cloudinaryUploader } = require("../configurations/cloudinaryUploader");
+const Classroom = require("../models/Classroom");
+const User = require("../models/User");
 
 exports.uploadFile=async(req,res)=>{
     try {
-        const resume=req.files.resume
-        const resumeUploaded=await cloudinaryUploader(resume,process.env.FOLDER_NAME);
+        const timetable=req.files.timetable
+        const {id,classroom}=req.body;
 
+        const uploaded=await cloudinaryUploader(timetable,process.env.FOLDER_NAME);
+
+        const updateInstructor=await User.findByIdAndUpdate(id,
+            {timetable:uploaded.secure_url},{new:true});
+
+        const updatedClassroom=await Classroom.findByIdAndUpdate(classroom,
+            {timetable:uploaded.secure_url},{new:true});
+        
         return res.status(200).json({
             success:true,
-            message:"Resume Uploaded Successfully",
-            data:resumeUploaded.secure_url
+            message:"File Uploaded Successfully",
+            data:uploaded.secure_url
         });
 
     } catch (error) {

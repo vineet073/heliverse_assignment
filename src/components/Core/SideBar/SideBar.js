@@ -38,7 +38,6 @@ export default function SideBar()  {
       <div className='border-y-[1px] border-richblack-700 my-8 mx-4'></div>
 
       <div>
-        <SideBarLinks name={"Settings"} iconName={"VscSettingsGear"} path={"/dashboard/settings"}/>
 
         <button
             onClick={()=>setOpen(prevState=>!prevState)}                    
