@@ -6,7 +6,7 @@ import AddUsers from "../components/Core/AddUsers";
 const tabData = [
   {
     id: 1,
-    tabName: "Students",
+    tabName: "Total Students",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ function AllStudents() {
     <div>
       <Tab tabData={tabData} field={field} setField={setField} />
       {
-        field === "Students" ? (
+        field === "Total Students" ? (
           <UserList setField={setField} tabData={tabData}/>
         ) : (
           <AddUsers/>

@@ -1,13 +1,12 @@
 import { useState } from "react";
 import Tab from "../Tab";
 import Upload from "../Upload";
-import { useForm } from "react-hook-form";
 import UserList from "../UserList";
 
 const tabData = [
   {
     id: 1,
-    tabName: "Students Enrolled",
+    tabName: "Enrolled Students",
   },
   {
     id: 2,
