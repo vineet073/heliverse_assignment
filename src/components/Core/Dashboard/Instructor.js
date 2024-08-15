@@ -22,7 +22,7 @@ function Instructor() {
     <div>
       <Tab tabData={tabData} field={field} setField={setField} />
       {
-        field === "Students Enrolled" ? (
+        field === "Enrolled Students" ? (
           <UserList setField={setField} tabData={tabData}/>
         ) : (
           <Upload
